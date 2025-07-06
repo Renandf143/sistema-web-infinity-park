@@ -4,9 +4,16 @@ from . import views
 app_name = 'ingressos'
 
 urlpatterns = [
-    path('', views.lista, name='lista'),
-    path('comprar/', views.comprar, name='comprar'),
+    path('', views.lista_ingressos, name='lista'),
+    path('<int:id>/', views.detalhe_ingresso, name='detalhe'),
+    path('carrinho/', views.carrinho, name='carrinho'),
+    path('checkout/', views.checkout, name='checkout'),
     path('meus-ingressos/', views.meus_ingressos, name='meus_ingressos'),
-    path('validar/<str:codigo>/', views.validar, name='validar'),
-    path('categoria/<int:categoria_id>/', views.lista_por_categoria, name='categoria'),
+    path('compra-sucesso/<str:codigo>/', views.compra_sucesso, name='compra_sucesso'),
+    
+    # AJAX endpoints
+    path('ajax/adicionar-carrinho/', views.adicionar_carrinho, name='adicionar_carrinho'),
+    path('ajax/remover-carrinho/', views.remover_carrinho, name='remover_carrinho'),
+    path('ajax/aplicar-promocao/', views.aplicar_promocao, name='aplicar_promocao'),
+    path('ajax/verificar-promocao/', views.verificar_promocao, name='verificar_promocao'),
 ]

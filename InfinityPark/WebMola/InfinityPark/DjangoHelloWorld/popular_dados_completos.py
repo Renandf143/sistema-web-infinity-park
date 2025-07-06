@@ -1,570 +1,361 @@
+#!/usr/bin/env python
 """
-Script para popular o banco de dados com dados realistas completos
+Script para popular o banco de dados com dados completos do Infinity Park
 Execute: python manage.py shell < popular_dados_completos.py
 """
-
 import os
+import sys
 import django
-from django.utils import timezone
 from datetime import datetime, timedelta
 from decimal import Decimal
 
 # Configurar Django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'infinity_park.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 django.setup()
 
-from atracoes.models import CategoriaAtracao, Atracao
+from django.contrib.auth.models import User
+from django.utils import timezone
 from eventos.models import CategoriaEvento, Evento
-from restaurantes.models import Restaurante
-from hoteis.models import Hotel
-from ingressos.models import TipoIngresso
-
-def criar_categorias_atracoes():
-    """Criar categorias de atrações"""
-    categorias = [
-        ('radical', 'Radical', 'Atrações para os mais corajosos'),
-        ('familiar', 'Familiar', 'Diversão para toda a família'),
-        ('infantil', 'Infantil', 'Especial para crianças'),
-        ('show', 'Show', 'Espetáculos e apresentações'),
-        ('animal', 'Animal', 'Interação com animais'),
-    ]
-    
-    for tipo, nome, descricao in categorias:
-        categoria, created = CategoriaAtracao.objects.get_or_create(
-            tipo=tipo,
-            defaults={'nome': nome, 'descricao': descricao}
-        )
-        if created:
-            print(f"Categoria criada: {nome}")
-
-def criar_atracoes_realistas():
-    """Criar atrações realistas de parque"""
-    # Buscar categorias
-    radical = CategoriaAtracao.objects.get(tipo='radical')
-    familiar = CategoriaAtracao.objects.get(tipo='familiar')
-    infantil = CategoriaAtracao.objects.get(tipo='infantil')
-    show = CategoriaAtracao.objects.get(tipo='show')
-    
-    atracoes = [
-        # Atrações Radicais
-        {
-            'nome': 'Thunder Mountain',
-            'descricao': 'Montanha-russa radical com loops duplos e velocidade de até 120 km/h. Uma experiência única de adrenalina com 8 inversões em 2 minutos de pura emoção.',
-            'categoria': radical,
-            'altura_minima': 140,
-            'idade_minima': 12,
-            'duracao': 2,
-            'capacidade': 24,
-            'nivel_emocao': 5,
-            'tempo_fila_medio': 45,
-            'regras': 'Não permitido para gestantes, pessoas com problemas cardíacos ou de coluna. Objetos soltos devem ser guardados nos armários.',
-            'status': 'ativa'
-        },
-        {
-            'nome': 'Tornado Spin',
-            'descricao': 'Torre de queda livre com 80 metros de altura. Suba devagar e desça em queda livre a 100 km/h. Vista panorâmica incrível do parque.',
-            'categoria': radical,
-            'altura_minima': 135,
-            'idade_minima': 10,
-            'duracao': 3,
-            'capacidade': 16,
-            'nivel_emocao': 5,
-            'tempo_fila_medio': 30,
-            'regras': 'Não permitido para gestantes. Peso máximo 120kg por pessoa.',
-            'status': 'ativa'
-        },
-        {
-            'nome': 'Sky Screamer',
-            'descricao': 'Montanha-russa invertida com trilhos suspensos. Pés livres balançando enquanto você voa pelos ares em alta velocidade.',
-            'categoria': radical,
-            'altura_minima': 140,
-            'idade_minima': 12,
-            'duracao': 2,
-            'capacidade': 20,
-            'nivel_emocao': 5,
-            'tempo_fila_medio': 40,
-            'regras': 'Calçados obrigatórios (sem sandálias). Não permitido para gestantes.',
-            'status': 'ativa'
-        },
-        
-        # Atrações Familiares
-        {
-            'nome': 'Roda Gigante Panorâmica',
-            'descricao': 'Roda gigante de 65 metros com cabines climatizadas. Vista de 360° do parque e da cidade. Perfeita para toda a família.',
-            'categoria': familiar,
-            'altura_minima': None,
-            'idade_minima': None,
-            'duracao': 8,
-            'capacidade': 120,
-            'nivel_emocao': 2,
-            'tempo_fila_medio': 15,
-            'regras': 'Crianças menores de 7 anos devem estar acompanhadas.',
-            'status': 'ativa'
-        },
-        {
-            'nome': 'Trem Fantasma',
-            'descricao': 'Passeio assombrado com efeitos especiais, animatrônicos e sustos controlados. Diversão garantida para toda a família.',
-            'categoria': familiar,
-            'altura_minima': 100,
-            'idade_minima': 6,
-            'duracao': 5,
-            'capacidade': 8,
-            'nivel_emocao': 3,
-            'tempo_fila_medio': 25,
-            'regras': 'Não recomendado para crianças menores de 6 anos. Efeitos de luz e som.',
-            'status': 'ativa'
-        },
-        {
-            'nome': 'Montanha Russa Familiar',
-            'descricao': 'Montanha-russa suave com curvas divertidas, sem inversões. Ideal para primeira experiência em montanha-russa.',
-            'categoria': familiar,
-            'altura_minima': 110,
-            'idade_minima': 5,
-            'duracao': 3,
-            'capacidade': 16,
-            'nivel_emocao': 3,
-            'tempo_fila_medio': 20,
-            'regras': 'Crianças menores de 10 anos devem estar acompanhadas.',
-            'status': 'ativa'
-        },
-        
-        # Atrações Infantis
-        {
-            'nome': 'Carrossel Mágico',
-            'descricao': 'Carrossel clássico com cavalos coloridos e música alegre. Decorado com luzes LED e personagens encantados.',
-            'categoria': infantil,
-            'altura_minima': None,
-            'idade_minima': None,
-            'duracao': 4,
-            'capacidade': 32,
-            'nivel_emocao': 1,
-            'tempo_fila_medio': 10,
-            'regras': 'Crianças menores de 4 anos devem estar acompanhadas.',
-            'status': 'ativa'
-        },
-        {
-            'nome': 'Barcos Pirata',
-            'descricao': 'Barquinhos em piscina com jatos d\'água e ilha do tesouro. Aventura pirata para os pequenos exploradores.',
-            'categoria': infantil,
-            'altura_minima': 90,
-            'idade_minima': 3,
-            'duracao': 6,
-            'capacidade': 12,
-            'nivel_emocao': 2,
-            'tempo_fila_medio': 15,
-            'regras': 'Crianças devem usar colete salva-vidas fornecido.',
-            'status': 'ativa'
-        },
-        {
-            'nome': 'Trem do Zoológico',
-            'descricao': 'Trem que percorre o mini zoológico do parque. Veja animais de perto em um passeio educativo e divertido.',
-            'categoria': infantil,
-            'altura_minima': None,
-            'idade_minima': None,
-            'duracao': 12,
-            'capacidade': 40,
-            'nivel_emocao': 1,
-            'tempo_fila_medio': 8,
-            'regras': 'Não é permitido alimentar os animais.',
-            'status': 'ativa'
-        }
-    ]
-    
-    for atracao_data in atracoes:
-        atracao, created = Atracao.objects.get_or_create(
-            nome=atracao_data['nome'],
-            defaults=atracao_data
-        )
-        if created:
-            print(f"Atração criada: {atracao_data['nome']}")
+from ingressos.models import TipoIngresso, Promocao
 
 def criar_categorias_eventos():
     """Criar categorias de eventos"""
     categorias = [
-        ('show', 'Show', 'Apresentações musicais e artísticas'),
-        ('espetaculo', 'Espetáculo', 'Grandes espetáculos temáticos'),
-        ('parada', 'Parada', 'Desfiles e paradas'),
-        ('encontro_personagem', 'Encontro com Personagem', 'Encontros com personagens'),
-        ('evento_especial', 'Evento Especial', 'Eventos sazonais especiais'),
+        {'nome': 'Shows Musicais', 'descricao': 'Apresentações musicais ao vivo', 'cor': '#ff6b6b', 'icone': 'fas fa-music'},
+        {'nome': 'Espetáculos', 'descricao': 'Grandes espetáculos teatrais', 'cor': '#4ecdc4', 'icone': 'fas fa-theater-masks'},
+        {'nome': 'Encontro com Personagens', 'descricao': 'Conheca seus personagens favoritos', 'cor': '#ffe66d', 'icone': 'fas fa-heart'},
+        {'nome': 'Paradas', 'descricao': 'Desfiles e paradas temáticas', 'cor': '#ff8b94', 'icone': 'fas fa-star'},
+        {'nome': 'Eventos Especiais', 'descricao': 'Celebrações e eventos sazonais', 'cor': '#95e1d3', 'icone': 'fas fa-calendar-star'},
     ]
     
-    for tipo, nome, descricao in categorias:
+    for cat_data in categorias:
         categoria, created = CategoriaEvento.objects.get_or_create(
-            tipo=tipo,
-            defaults={'nome': nome, 'descricao': descricao}
+            nome=cat_data['nome'],
+            defaults=cat_data
         )
         if created:
-            print(f"Categoria de evento criada: {nome}")
+            print(f"✓ Categoria criada: {categoria.nome}")
 
 def criar_eventos_realistas():
     """Criar eventos realistas"""
-    # Buscar categorias
-    show = CategoriaEvento.objects.get(tipo='show')
-    espetaculo = CategoriaEvento.objects.get(tipo='espetaculo')
-    parada = CategoriaEvento.objects.get(tipo='parada')
-    encontro = CategoriaEvento.objects.get(tipo='encontro_personagem')
-    
-    # Datas dos próximos dias
-    hoje = timezone.now().date()
-    
-    eventos = [
-        # Shows
+    eventos_data = [
         {
-            'nome': 'Show Musical: Clássicos do Rock',
-            'descricao': 'Apresentação ao vivo com as maiores hits do rock internacional. Banda completa com efeitos visuais e pirotecnia.',
-            'categoria': show,
-            'data_evento': hoje + timedelta(days=1),
-            'hora_inicio': datetime.strptime('19:00', '%H:%M').time(),
-            'hora_fim': datetime.strptime('20:30', '%H:%M').time(),
-            'duracao': 90,
-            'local': 'Teatro Principal',
-            'capacidade': 500,
-            'preco': Decimal('25.00'),
-            'artistas_performers': 'Banda Thunder Rock, Vocalista Maria Silva',
-            'detalhes_extras': 'Show com efeitos especiais de luz e som. Recomendado para maiores de 8 anos.',
-            'requer_ingresso_adicional': True
-        },
-        {
-            'nome': 'Show Infantil: Aventuras na Floresta',
-            'descricao': 'Show interativo para crianças com personagens animados, músicas e danças. Participação do público.',
-            'categoria': show,
-            'data_evento': hoje + timedelta(days=2),
-            'hora_inicio': datetime.strptime('15:00', '%H:%M').time(),
-            'hora_fim': datetime.strptime('16:00', '%H:%M').time(),
-            'duracao': 60,
-            'local': 'Teatro Infantil',
-            'capacidade': 200,
-            'preco': None,
-            'artistas_performers': 'Grupo Teatro Mágico',
-            'detalhes_extras': 'Show gratuito incluído no ingresso do parque.',
-            'requer_ingresso_adicional': False
-        },
-        
-        # Espetáculos
-        {
-            'nome': 'Espetáculo: Circo dos Sonhos',
-            'descricao': 'Grande espetáculo circense com acrobatas, malabaristas e palhaços. Uma experiência única para toda a família.',
-            'categoria': espetaculo,
-            'data_evento': hoje + timedelta(days=3),
-            'hora_inicio': datetime.strptime('18:00', '%H:%M').time(),
-            'hora_fim': datetime.strptime('19:30', '%H:%M').time(),
-            'duracao': 90,
-            'local': 'Arena Central',
-            'capacidade': 800,
-            'preco': Decimal('35.00'),
-            'artistas_performers': 'Circo Internacional dos Sonhos',
-            'detalhes_extras': 'Espetáculo com animais treinados e acrobacias aéreas.',
-            'requer_ingresso_adicional': True
-        },
-        
-        # Paradas
-        {
-            'nome': 'Grande Parada dos Personagens',
-            'descricao': 'Desfile com todos os personagens do parque, carros alegóricos e muita música. Não perca!',
-            'categoria': parada,
-            'data_evento': hoje + timedelta(days=4),
-            'hora_inicio': datetime.strptime('16:00', '%H:%M').time(),
-            'hora_fim': datetime.strptime('17:00', '%H:%M').time(),
-            'duracao': 60,
-            'local': 'Avenida Principal',
-            'capacidade': 2000,
-            'preco': None,
-            'artistas_performers': 'Personagens do Infinity Park',
-            'detalhes_extras': 'Parada gratuita. Chegue cedo para garantir o melhor lugar.',
-            'requer_ingresso_adicional': False
-        },
-        
-        # Encontros
-        {
-            'nome': 'Encontro com Mascote Infinity',
-            'descricao': 'Encontro e sessão de fotos com o mascote oficial do parque. Autógrafos e abraços garantidos!',
-            'categoria': encontro,
-            'data_evento': hoje + timedelta(days=1),
-            'hora_inicio': datetime.strptime('14:00', '%H:%M').time(),
-            'hora_fim': datetime.strptime('15:00', '%H:%M').time(),
-            'duracao': 60,
+            'nome': 'Festival de Luzes Mágicas',
+            'descricao': 'Um espetáculo deslumbrante com milhares de luzes LED sincronizadas com música épica. Uma experiência única que transforma o parque em um mundo de fantasia.',
+            'categoria': 'Espetáculos',
+            'tipo': 'show',
+            'faixa_etaria': 'familia',
             'local': 'Praça Central',
-            'capacidade': 50,
-            'preco': None,
-            'artistas_performers': 'Mascote Infinity',
-            'detalhes_extras': 'Atividade gratuita. Limite de 1 foto por família.',
-            'requer_ingresso_adicional': False
+            'capacidade': 2000,
+            'duracao_minutos': 45,
+            'imagem_principal': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
+            'artistas': 'Orquestra Sinfônica, Grupo de Dança Contemporânea',
+            'gratuito': True,
+            'destaque': True,
+        },
+        {
+            'nome': 'Rock in Park - Noite dos Heróis',
+            'descricao': 'Show de rock com covers dos maiores sucessos dos filmes de super-heróis. Uma noite épica com efeitos especiais e surpresas.',
+            'categoria': 'Shows Musicais',
+            'tipo': 'show',
+            'faixa_etaria': 'teen',
+            'local': 'Anfiteatro Principal',
+            'capacidade': 1500,
+            'duracao_minutos': 90,
+            'imagem_principal': 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800',
+            'artistas': 'Banda Thunder Heroes, DJ Marvel',
+            'gratuito': False,
+            'preco': Decimal('25.00'),
+        },
+        {
+            'nome': 'Encontro com Princesas Disney',
+            'descricao': 'Conheca suas princesas favoritas: Elsa, Anna, Bela, Cinderela e muito mais! Sessão de fotos, autógrafos e histórias mágicas.',
+            'categoria': 'Encontro com Personagens',
+            'tipo': 'encontro',
+            'faixa_etaria': 'infantil',
+            'local': 'Castelo Encantado',
+            'capacidade': 150,
+            'duracao_minutos': 60,
+            'imagem_principal': 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800',
+            'artistas': 'Princesas Disney Oficiais',
+            'gratuito': True,
+            'destaque': True,
+        },
+        {
+            'nome': 'Parada dos Super-Heróis',
+            'descricao': 'Uma parada espetacular com carros alegóricos gigantes dos super-heróis mais amados. Batman, Superman, Mulher Maravilha e muito mais!',
+            'categoria': 'Paradas',
+            'tipo': 'parada',
+            'faixa_etaria': 'familia',
+            'local': 'Avenida Principal',
+            'capacidade': 5000,
+            'duracao_minutos': 30,
+            'imagem_principal': 'https://images.unsplash.com/photo-1635805737707-575885ab0820?w=800',
+            'artistas': 'Super-Heróis da Marvel e DC',
+            'gratuito': True,
+        },
+        {
+            'nome': 'Halloween Horror Nights',
+            'descricao': 'A noite mais assombrada do ano! Casas mal-assombradas, zumbis, e sustos em cada esquina. Apenas para os corajosos!',
+            'categoria': 'Eventos Especiais',
+            'tipo': 'especial',
+            'faixa_etaria': 'adulto',
+            'local': 'Todo o Parque',
+            'capacidade': 3000,
+            'duracao_minutos': 480,
+            'imagem_principal': 'https://images.unsplash.com/photo-1509909756405-be0199881695?w=800',
+            'artistas': 'Atores Profissionais de Terror',
+            'gratuito': False,
+            'preco': Decimal('80.00'),
+            'destaque': True,
+        },
+        {
+            'nome': 'Workshop de Mágica com Harry Potter',
+            'descricao': 'Aprenda truques de mágica com os personagens do mundo mágico! Receba sua varinha e participe de aulas interativas.',
+            'categoria': 'Eventos Especiais',
+            'tipo': 'workshop',
+            'faixa_etaria': 'familia',
+            'local': 'Escola de Magia',
+            'capacidade': 80,
+            'duracao_minutos': 120,
+            'imagem_principal': 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800',
+            'artistas': 'Magos Profissionais',
+            'gratuito': False,
+            'preco': Decimal('45.00'),
+        },
+        {
+            'nome': 'Competição de Cosplay',
+            'descricao': 'Mostre sua criatividade! Competição de fantasias com premiação para as melhores caracterizações de personagens.',
+            'categoria': 'Eventos Especiais',
+            'tipo': 'competicao',
+            'faixa_etaria': 'teen',
+            'local': 'Arena de Eventos',
+            'capacidade': 500,
+            'duracao_minutos': 180,
+            'imagem_principal': 'https://images.unsplash.com/photo-1566041510394-cf7c8fe21800?w=800',
+            'artistas': 'Jurados Especialistas em Cosplay',
+            'gratuito': True,
+        },
+        {
+            'nome': 'Festa de Ano Novo',
+            'descricao': 'Celebre a virada do ano com fogos de artifício espetaculares, shows ao vivo e uma contagem regressiva inesquecível!',
+            'categoria': 'Eventos Especiais',
+            'tipo': 'especial',
+            'faixa_etaria': 'familia',
+            'local': 'Praça Central',
+            'capacidade': 8000,
+            'duracao_minutos': 360,
+            'imagem_principal': 'https://images.unsplash.com/photo-1467810563316-b5476525c0f9?w=800',
+            'artistas': 'Artistas Nacionais e Internacionais',
+            'gratuito': False,
+            'preco': Decimal('120.00'),
+            'destaque': True,
         }
     ]
     
-    for evento_data in eventos:
+    now = timezone.now()
+    
+    for i, evento_data in enumerate(eventos_data):
+        categoria = CategoriaEvento.objects.get(nome=evento_data['categoria'])
+        
+        # Criar datas futuras realistas
+        dias_futuro = 7 + (i * 14)  # Eventos espaçados a cada 2 semanas
+        data_inicio = now + timedelta(days=dias_futuro, hours=19)  # 19h
+        data_fim = data_inicio + timedelta(minutes=evento_data['duracao_minutos'])
+        
         evento, created = Evento.objects.get_or_create(
             nome=evento_data['nome'],
-            defaults=evento_data
+            defaults={
+                **evento_data,
+                'categoria': categoria,
+                'data_inicio': data_inicio,
+                'data_fim': data_fim,
+                'galeria_imagens': f"{evento_data['imagem_principal']}, https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=800, https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=800",
+                'observacoes': 'Sujeito a alterações devido às condições climáticas.',
+                'avaliacao_media': 4.2 + (i * 0.1),
+                'total_avaliacoes': 50 + (i * 20)
+            }
         )
         if created:
-            print(f"Evento criado: {evento_data['nome']}")
-
-def criar_restaurantes_realistas():
-    """Criar restaurantes realistas"""
-    restaurantes = [
-        {
-            'nome': 'Pizzaria Infinity',
-            'categoria': 'pizzaria',
-            'descricao': 'Pizzas artesanais com ingredientes frescos. Ambiente familiar com vista para as atrações principais. Menu kids disponível. Opções vegetarianas e veganas.',
-            'horario_funcionamento': '11:00 - 22:00',
-            'telefone': '(11) 3456-7890',
-            'capacidade': 80,
-            'preco_medio': Decimal('45.00'),
-            'aceita_reserva': True,
-            'status': 'aberto'
-        },
-        {
-            'nome': 'Hamburgueria Thunder',
-            'categoria': 'lanchonete',
-            'descricao': 'Hambúrgueres gourmet e batatas especiais. Ambiente descontraído com música ao vivo nos fins de semana. Hambúrgueres de 200g, batatas rústicas e milk-shakes.',
-            'horario_funcionamento': '12:00 - 23:00',
-            'telefone': '(11) 3456-7891',
-            'capacidade': 60,
-            'preco_medio': Decimal('35.00'),
-            'aceita_reserva': True,
-            'status': 'aberto'
-        },
-        {
-            'nome': 'Café Panorâmico',
-            'categoria': 'cafeteria',
-            'descricao': 'Cafeteria com vista panorâmica do parque. Cafés especiais, doces e salgados. Wi-Fi gratuito. Ideal para relaxar e apreciar a vista.',
-            'horario_funcionamento': '08:00 - 20:00',
-            'telefone': '(11) 3456-7892',
-            'capacidade': 40,
-            'preco_medio': Decimal('25.00'),
-            'aceita_reserva': False,
-            'status': 'aberto'
-        },
-        {
-            'nome': 'Restaurante Família',
-            'categoria': 'restaurante',
-            'descricao': 'Culinária brasileira tradicional com pratos para toda a família. Ambiente acolhedor e preços justos. Buffet aos domingos. Cadeirões para bebês disponíveis.',
-            'horario_funcionamento': '11:30 - 21:30',
-            'telefone': '(11) 3456-7893',
-            'capacidade': 120,
-            'preco_medio': Decimal('40.00'),
-            'aceita_reserva': True,
-            'status': 'aberto'
-        },
-        {
-            'nome': 'Sorveteria Gelato',
-            'categoria': 'sorveteria',
-            'descricao': 'Sorvetes artesanais, açaí e milk-shakes. Sabores únicos e ingredientes naturais. Sorvetes sem açúcar e opções veganas disponíveis.',
-            'horario_funcionamento': '10:00 - 22:00',
-            'telefone': '(11) 3456-7894',
-            'capacidade': 30,
-            'preco_medio': Decimal('18.00'),
-            'aceita_reserva': False,
-            'status': 'aberto'
-        }
-    ]
-    
-    for restaurante_data in restaurantes:
-        restaurante, created = Restaurante.objects.get_or_create(
-            nome=restaurante_data['nome'],
-            defaults=restaurante_data
-        )
-        if created:
-            print(f"Restaurante criado: {restaurante_data['nome']}")
-
-def criar_hoteis_realistas():
-    """Criar hotéis realistas"""
-    # Primeiro criar categoria para hotéis
-    from hoteis.models import CategoriaHotel
-    
-    categoria_luxo, _ = CategoriaHotel.objects.get_or_create(
-        tipo='luxo',
-        defaults={'nome': 'Luxo', 'descricao': 'Hotéis de alto padrão'}
-    )
-    
-    categoria_familiar, _ = CategoriaHotel.objects.get_or_create(
-        tipo='familiar',
-        defaults={'nome': 'Familiar', 'descricao': 'Hotéis para famílias'}
-    )
-    
-    categoria_economico, _ = CategoriaHotel.objects.get_or_create(
-        tipo='economico',
-        defaults={'nome': 'Econômico', 'descricao': 'Hotéis econômicos'}
-    )
-    
-    hoteis = [
-        {
-            'nome': 'Hotel Infinity Resort',
-            'descricao': 'Hotel 5 estrelas com vista para o parque. Quartos luxuosos, spa, piscina e acesso direto ao parque. Ingresso VIP para o parque incluído. Serviço de quarto 24h.',
-            'categoria': categoria_luxo,
-            'endereco': 'Entrada Principal do Parque',
-            'distancia_parque': Decimal('0.1'),
-            'estrelas': 5,
-            'quartos_disponiveis': 15,
-            'total_quartos': 200,
-            'wifi_gratuito': True,
-            'estacionamento': True,
-            'piscina': True,
-            'academia': True,
-            'restaurante': True,
-            'spa': True,
-            'transporte_parque': False,
-            'preco_diaria_base': Decimal('450.00'),
-            'telefone': '(11) 4567-8901',
-            'email': 'reservas@infinityresort.com',
-            'status': 'disponivel',
-            'avaliacao_media': Decimal('4.8')
-        },
-        {
-            'nome': 'Pousada Aventura',
-            'descricao': 'Pousada temática com decoração de aventura. Ideal para famílias que buscam conforto e diversão. Café da manhã incluso. Transporte gratuito para o parque.',
-            'categoria': categoria_familiar,
-            'endereco': 'A 500m da entrada do parque',
-            'distancia_parque': Decimal('0.5'),
-            'estrelas': 3,
-            'quartos_disponiveis': 8,
-            'total_quartos': 80,
-            'wifi_gratuito': True,
-            'estacionamento': True,
-            'piscina': True,
-            'academia': False,
-            'restaurante': True,
-            'spa': False,
-            'transporte_parque': True,
-            'preco_diaria_base': Decimal('180.00'),
-            'telefone': '(11) 4567-8902',
-            'email': 'contato@pousadaaventura.com',
-            'status': 'disponivel',
-            'avaliacao_media': Decimal('4.2')
-        },
-        {
-            'nome': 'Hotel Econômico Parque',
-            'descricao': 'Hotel econômico com boa localização. Quartos limpos e confortáveis para quem busca economia. Café da manhã simples incluso. Ônibus para o parque a cada 30 min.',
-            'categoria': categoria_economico,
-            'endereco': 'A 1km da entrada do parque',
-            'distancia_parque': Decimal('1.0'),
-            'estrelas': 2,
-            'quartos_disponiveis': 12,
-            'total_quartos': 50,
-            'wifi_gratuito': True,
-            'estacionamento': True,
-            'piscina': False,
-            'academia': False,
-            'restaurante': False,
-            'spa': False,
-            'transporte_parque': True,
-            'preco_diaria_base': Decimal('95.00'),
-            'telefone': '(11) 4567-8903',
-            'email': 'reservas@hoteleconomicoparque.com',
-            'status': 'disponivel',
-            'avaliacao_media': Decimal('3.8')
-        }
-    ]
-    
-    for hotel_data in hoteis:
-        hotel, created = Hotel.objects.get_or_create(
-            nome=hotel_data['nome'],
-            defaults=hotel_data
-        )
-        if created:
-            print(f"Hotel criado: {hotel_data['nome']}")
+            print(f"✓ Evento criado: {evento.nome}")
 
 def criar_tipos_ingressos():
     """Criar tipos de ingressos realistas"""
-    ingressos = [
+    tipos_data = [
         {
             'nome': 'Ingresso Básico',
-            'tipo': 'diario',
-            'descricao': 'Acesso a todas as atrações do parque por 1 dia. Ideal para quem quer aproveitar o máximo do parque. Inclui acesso a todas as atrações, shows gratuitos, paradas e encontros com personagens.',
-            'preco': Decimal('85.00'),
+            'descricao': 'Acesso a todas as atrações do parque durante um dia inteiro. Diversão garantida!',
+            'preco': Decimal('89.90'),
+            'cor': '#007bff',
+            'icone': 'fas fa-ticket-alt',
             'validade_dias': 1,
-            'ativo': True,
-            'destaque': False,
-            'acesso_vip': False,
-            'acesso_fast_pass': False,
-            'inclui_estacionamento': False,
-            'inclui_refeicao': False
+            'idade_minima': 0,
         },
         {
-            'nome': 'Ingresso VIP',
-            'tipo': 'vip',
-            'descricao': 'Experiência premium com Fast Pass e benefícios exclusivos. Pule filas e aproveite mais! Inclui Fast Pass para todas as atrações, estacionamento gratuito, desconto de 20% em restaurantes.',
-            'preco': Decimal('150.00'),
+            'nome': 'Ingresso Família (4 pessoas)',
+            'descricao': 'Pacote especial para família com até 4 pessoas. Melhor custo-benefício!',
+            'preco': Decimal('299.90'),
+            'cor': '#28a745',
+            'icone': 'fas fa-users',
             'validade_dias': 1,
-            'ativo': True,
-            'destaque': True,
-            'acesso_vip': True,
+            'idade_minima': 0,
+            'desconto_restaurantes': 10,
+        },
+        {
+            'nome': 'Fast Pass VIP',
+            'descricao': 'Passe pela fila preferencial em todas as atrações + acesso VIP a eventos especiais.',
+            'preco': Decimal('149.90'),
+            'cor': '#ffc107',
+            'icone': 'fas fa-crown',
             'acesso_fast_pass': True,
-            'inclui_estacionamento': True,
-            'inclui_refeicao': False
+            'acesso_vip': True,
+            'validade_dias': 1,
+            'desconto_restaurantes': 20,
+            'desconto_loja': 15,
+        },
+        {
+            'nome': 'Passe Anual Premium',
+            'descricao': 'Acesso ilimitado por 1 ano + estacionamento gratuito + descontos exclusivos.',
+            'preco': Decimal('899.90'),
+            'cor': '#dc3545',
+            'icone': 'fas fa-infinity',
+            'acesso_fast_pass': True,
+            'acesso_vip': True,
+            'estacionamento_gratuito': True,
+            'validade_dias': 365,
+            'desconto_restaurantes': 30,
+            'desconto_loja': 25,
+        },
+        {
+            'nome': 'Ingresso Infantil',
+            'descricao': 'Especial para crianças de 3 a 12 anos. Inclui brinde exclusivo!',
+            'preco': Decimal('59.90'),
+            'cor': '#fd7e14',
+            'icone': 'fas fa-child',
+            'validade_dias': 1,
+            'idade_minima': 3,
+            'idade_maxima': 12,
         },
         {
             'nome': 'Ingresso Estudante',
-            'tipo': 'estudante',
-            'descricao': 'Desconto especial para estudantes com documento. Acesso a todas as atrações com preço especial.',
-            'preco': Decimal('65.00'),
+            'descricao': 'Desconto especial para estudantes. Apresente sua carteirinha na entrada.',
+            'preco': Decimal('69.90'),
+            'cor': '#6610f2',
+            'icone': 'fas fa-graduation-cap',
             'validade_dias': 1,
-            'ativo': True,
-            'destaque': False,
-            'acesso_vip': False,
-            'acesso_fast_pass': False,
-            'inclui_estacionamento': False,
-            'inclui_refeicao': False
+            'idade_minima': 12,
         },
         {
-            'nome': 'Pacote Familiar',
-            'tipo': 'familiar',
-            'descricao': 'Pacote especial para famílias de até 4 pessoas. Inclui estacionamento gratuito e voucher de R$ 50 para restaurantes.',
-            'preco': Decimal('280.00'),
-            'validade_dias': 1,
-            'ativo': True,
-            'destaque': True,
-            'acesso_vip': False,
-            'acesso_fast_pass': False,
-            'inclui_estacionamento': True,
-            'inclui_refeicao': True
-        },
-        {
-            'nome': 'Passaporte Anual',
-            'tipo': 'anual',
-            'descricao': 'Acesso ilimitado ao parque por 1 ano inteiro. Inclui todos os benefícios VIP, estacionamento gratuito e descontos em restaurantes.',
-            'preco': Decimal('850.00'),
-            'validade_dias': 365,
-            'ativo': True,
-            'destaque': True,
-            'acesso_vip': True,
-            'acesso_fast_pass': True,
-            'inclui_estacionamento': True,
-            'inclui_refeicao': False
+            'nome': '2 Dias Consecutivos',
+            'descricao': 'Aproveite o parque por dois dias seguidos. Mais tempo para curtir tudo!',
+            'preco': Decimal('159.90'),
+            'cor': '#20c997',
+            'icone': 'fas fa-calendar-day',
+            'validade_dias': 2,
+            'desconto_restaurantes': 5,
         }
     ]
     
-    for ingresso_data in ingressos:
-        ingresso, created = TipoIngresso.objects.get_or_create(
-            nome=ingresso_data['nome'],
-            defaults=ingresso_data
+    for tipo_data in tipos_data:
+        tipo, created = TipoIngresso.objects.get_or_create(
+            nome=tipo_data['nome'],
+            defaults=tipo_data
         )
         if created:
-            print(f"Tipo de ingresso criado: {ingresso_data['nome']}")
+            print(f"✓ Tipo de ingresso criado: {tipo.nome}")
+
+def criar_promocoes():
+    """Criar promoções realistas"""
+    now = timezone.now()
+    
+    promocoes_data = [
+        {
+            'nome': 'Black Friday 2024',
+            'descricao': 'Desconto imperdível de Black Friday! Válido apenas hoje!',
+            'codigo': 'BLACKFRIDAY50',
+            'tipo_desconto': 'percentual',
+            'valor_desconto': Decimal('50.00'),
+            'data_inicio': now - timedelta(days=1),
+            'data_fim': now + timedelta(days=30),
+            'uso_maximo': 1,
+            'quantidade_maxima': 1000,
+            'valor_minimo': Decimal('100.00'),
+        },
+        {
+            'nome': 'Desconto Família',
+            'descricao': 'R$ 30 OFF para compras em família!',
+            'codigo': 'FAMILIA30',
+            'tipo_desconto': 'valor_fixo',
+            'valor_desconto': Decimal('30.00'),
+            'data_inicio': now,
+            'data_fim': now + timedelta(days=60),
+            'uso_maximo': 2,
+            'valor_minimo': Decimal('200.00'),
+        },
+        {
+            'nome': 'Primeira Visita',
+            'descricao': '20% OFF para quem visita pela primeira vez!',
+            'codigo': 'PRIMEIRAVISITA',
+            'tipo_desconto': 'percentual',
+            'valor_desconto': Decimal('20.00'),
+            'data_inicio': now,
+            'data_fim': now + timedelta(days=90),
+            'uso_maximo': 1,
+            'valor_minimo': Decimal('50.00'),
+        },
+        {
+            'nome': 'Aniversário do Parque',
+            'descricao': 'Celebre conosco! 25% OFF em todos os ingressos!',
+            'codigo': 'ANIVERSARIO25',
+            'tipo_desconto': 'percentual',
+            'valor_desconto': Decimal('25.00'),
+            'data_inicio': now + timedelta(days=30),
+            'data_fim': now + timedelta(days=37),
+            'uso_maximo': 1,
+            'quantidade_maxima': 500,
+        }
+    ]
+    
+    for promo_data in promocoes_data:
+        promocao, created = Promocao.objects.get_or_create(
+            codigo=promo_data['codigo'],
+            defaults=promo_data
+        )
+        if created:
+            print(f"✓ Promoção criada: {promocao.nome}")
 
 def main():
-    """Função principal para executar todos os dados"""
-    print("Iniciando criação de dados realistas...")
+    """Executar população completa do banco"""
+    print("🎢 Populando banco de dados do Infinity Park...")
+    print("=" * 50)
     
-    # Criar dados na ordem correta
-    criar_categorias_atracoes()
-    criar_atracoes_realistas()
-    
-    criar_categorias_eventos()
-    criar_eventos_realistas()
-    
-    criar_restaurantes_realistas()
-    criar_hoteis_realistas()
-    criar_tipos_ingressos()
-    
-    print("\nDados criados com sucesso!")
-    print("O banco de dados agora contém:")
-    print(f"- {Atracao.objects.count()} atrações")
-    print(f"- {Evento.objects.count()} eventos")
-    print(f"- {Restaurante.objects.count()} restaurantes")
-    print(f"- {Hotel.objects.count()} hotéis")
-    print(f"- {TipoIngresso.objects.count()} tipos de ingressos")
+    try:
+        # Eventos
+        print("\n📅 Criando categorias de eventos...")
+        criar_categorias_eventos()
+        
+        print("\n🎭 Criando eventos...")
+        criar_eventos_realistas()
+        
+        # Ingressos
+        print("\n🎫 Criando tipos de ingressos...")
+        criar_tipos_ingressos()
+        
+        print("\n🏷️ Criando promoções...")
+        criar_promocoes()
+        
+        print("\n" + "=" * 50)
+        print("✅ Banco de dados populado com sucesso!")
+        print("\n📊 Resumo:")
+        print(f"   • {CategoriaEvento.objects.count()} categorias de eventos")
+        print(f"   • {Evento.objects.count()} eventos")
+        print(f"   • {TipoIngresso.objects.count()} tipos de ingressos")
+        print(f"   • {Promocao.objects.count()} promoções")
+        
+    except Exception as e:
+        print(f"❌ Erro ao popular banco: {e}")
+        import traceback
+        traceback.print_exc()
 
 if __name__ == "__main__":
     main()

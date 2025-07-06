@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'usuarios',
     'administracao',
     'servicos',
+    'paginas',
 ]
 
 MIDDLEWARE = [

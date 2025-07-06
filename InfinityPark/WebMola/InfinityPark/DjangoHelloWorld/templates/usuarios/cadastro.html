@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cadastrar - Infinity Park{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center py-4">
+                    <h3 class="mb-0">
+                        <i class="fas fa-user-plus"></i> Criar Conta no Infinity Park
+                    </h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" id="cadastroForm">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="first_name" class="form-label">
+                                    <i class="fas fa-user"></i> Nome *
+                                </label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="last_name" class="form-label">
+                                    <i class="fas fa-user"></i> Sobrenome *
+                                </label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="username" class="form-label">
+                                <i class="fas fa-at"></i> Nome de Usuário *
+                            </label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle"></i> Apenas letras, números e sublinhados.
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">
+                                <i class="fas fa-envelope"></i> Email *
+                            </label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="password1" class="form-label">
+                                    <i class="fas fa-lock"></i> Senha *
+                                </label>
+                                <input type="password" class="form-control" id="password1" name="password1" required>
+                                <div class="form-text">
+                                    <i class="fas fa-shield-alt"></i> Mínimo 8 caracteres.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="password2" class="form-label">
+                                    <i class="fas fa-lock"></i> Confirmar Senha *
+                                </label>
+                                <input type="password" class="form-control" id="password2" name="password2" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="termos" required>
+                                <label class="form-check-label" for="termos">
+                                    Aceito os <a href="{% url 'termos_uso' %}" target="_blank">Termos de Uso</a> e 
+                                    <a href="{% url 'politica_privacidade' %}" target="_blank">Política de Privacidade</a>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-user-plus"></i> Criar Conta
+                            </button>
+                        </div>
+                        
+                        <div class="text-center">
+                            <p class="mb-0">Já tem uma conta?</p>
+                            <a href="{% url 'usuarios:login' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-sign-in-alt"></i> Entrar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('cadastroForm').addEventListener('submit', function(e) {
+    const password1 = document.getElementById('password1').value;
+    const password2 = document.getElementById('password2').value;
+    
+    if (password1 !== password2) {
+        e.preventDefault();
+        alert('As senhas não coincidem!');
+        return false;
+    }
+});
+</script>
+{% endblock %}

@@ -7,6 +7,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
+from paginas import views as paginas_views
 
 urlpatterns = [
     # Admin
@@ -20,6 +21,12 @@ urlpatterns = [
     path('ingressos/', include('ingressos.urls', namespace='ingressos')),
     path('usuarios/', include('usuarios.urls', namespace='usuarios')),
     path('servicos/', include('servicos.urls', namespace='servicos')),
+    
+    # Páginas legais e institucionais
+    path('sobre-nos/', paginas_views.sobre_nos, name='sobre_nos'),
+    path('termos-de-uso/', paginas_views.termos_uso, name='termos_uso'),
+    path('politica-de-privacidade/', paginas_views.politica_privacidade, name='politica_privacidade'),
+    path('faq/', paginas_views.faq, name='faq'),
     
     # Redirect favicon
     path('favicon.ico', RedirectView.as_view(url='/static/favicon.ico', permanent=True)),
