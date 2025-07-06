@@ -1,0 +1,754 @@
+{% extends 'base.html' %}
+
+{% block title %}Mapa do Parque - Infinity Park{% endblock %}
+
+{% block extra_css %}
+<style>
+    .map-container {
+        position: relative;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        overflow: hidden;
+        height: 600px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    .park-map {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: url('https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200') center/cover;
+        cursor: grab;
+        user-select: none;
+    }
+    
+    .park-map:active {
+        cursor: grabbing;
+    }
+    
+    .map-area {
+        position: absolute;
+        border: 3px solid white;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+    
+    .map-area:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        z-index: 10;
+    }
+    
+    .map-attraction {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        border: 3px solid white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 18px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    
+    .map-attraction:hover {
+        transform: scale(1.2);
+        z-index: 20;
+    }
+    
+    .map-service {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.9);
+        border: 2px solid #333;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        font-size: 14px;
+    }
+    
+    .map-service:hover {
+        transform: scale(1.1);
+        background: white;
+    }
+    
+    .map-controls {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+    }
+    
+    .map-control-btn {
+        background: rgba(255,255,255,0.9);
+        border: none;
+        border-radius: 10px;
+        width: 50px;
+        height: 50px;
+        margin: 5px 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: #333;
+    }
+    
+    .map-control-btn:hover {
+        background: white;
+        transform: scale(1.1);
+    }
+    
+    .map-legend {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(255,255,255,0.95);
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 300px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .legend-item {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+        font-size: 14px;
+    }
+    
+    .legend-icon {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+    }
+    
+    .attraction-tooltip {
+        position: absolute;
+        background: rgba(0,0,0,0.9);
+        color: white;
+        padding: 10px 15px;
+        border-radius: 10px;
+        font-size: 14px;
+        pointer-events: none;
+        z-index: 1000;
+        transform: translate(-50%, -120%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        max-width: 200px;
+        text-align: center;
+    }
+    
+    .attraction-tooltip::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid rgba(0,0,0,0.9);
+    }
+    
+    .filter-panel {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .filter-btn {
+        border: 2px solid #e9ecef;
+        background: white;
+        color: #6c757d;
+        border-radius: 25px;
+        padding: 8px 20px;
+        margin: 5px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .filter-btn.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+    
+    .wait-time-indicator {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ff6b6b;
+        color: white;
+        border-radius: 10px;
+        padding: 2px 6px;
+        font-size: 10px;
+        font-weight: bold;
+        min-width: 20px;
+        text-align: center;
+    }
+    
+    .wait-time-low { background: #51cf66; }
+    .wait-time-medium { background: #ffd43b; color: #333; }
+    .wait-time-high { background: #ff6b6b; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-map-marked-alt text-primary"></i>
+                Mapa Interativo do Parque
+            </h1>
+            <p class="lead text-muted">Explore cada canto do Infinity Park e planeje sua aventura!</p>
+        </div>
+    </div>
+    
+    <!-- Filtros -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-10">
+            <div class="filter-panel">
+                <h5 class="mb-3">
+                    <i class="fas fa-filter"></i> Filtros do Mapa
+                </h5>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Mostrar:</h6>
+                        <button class="filter-btn active" data-filter="atracoes">
+                            <i class="fas fa-rocket"></i> Atrações
+                        </button>
+                        <button class="filter-btn active" data-filter="servicos">
+                            <i class="fas fa-concierge-bell"></i> Serviços
+                        </button>
+                        <button class="filter-btn active" data-filter="restaurantes">
+                            <i class="fas fa-utensils"></i> Restaurantes
+                        </button>
+                        <button class="filter-btn active" data-filter="banheiros">
+                            <i class="fas fa-restroom"></i> Banheiros
+                        </button>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h6>Tempo de Espera:</h6>
+                        <button class="filter-btn active" data-wait="low">
+                            <i class="fas fa-check-circle text-success"></i> Sem fila (0-15min)
+                        </button>
+                        <button class="filter-btn active" data-wait="medium">
+                            <i class="fas fa-clock text-warning"></i> Moderado (16-30min)
+                        </button>
+                        <button class="filter-btn active" data-wait="high">
+                            <i class="fas fa-exclamation-triangle text-danger"></i> Longo (30min+)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mapa -->
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="map-container">
+                <div class="park-map" id="parkMap">
+                    
+                    <!-- Áreas do Parque -->
+                    {% for area in areas %}
+                        <div class="map-area" 
+                             style="left: {{ area.coordenadas_mapa.x|default:100 }}px; 
+                                    top: {{ area.coordenadas_mapa.y|default:100 }}px; 
+                                    width: {{ area.coordenadas_mapa.width|default:200 }}px; 
+                                    height: {{ area.coordenadas_mapa.height|default:150 }}px;
+                                    background-color: {{ area.cor }};">
+                            <div>
+                                <h6 class="mb-1">{{ area.nome }}</h6>
+                                <small>{{ area.get_tema_display }}</small>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    
+                    <!-- Controles do Mapa -->
+                    <div class="map-controls">
+                        <div class="d-flex flex-column">
+                            <button class="map-control-btn" onclick="zoomIn()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button class="map-control-btn" onclick="zoomOut()">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button class="map-control-btn" onclick="resetView()">
+                                <i class="fas fa-home"></i>
+                            </button>
+                            <button class="map-control-btn" onclick="toggleFullscreen()">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Legenda -->
+                    <div class="map-legend">
+                        <h6 class="fw-bold mb-3">
+                            <i class="fas fa-info-circle"></i> Legenda
+                        </h6>
+                        
+                        <div class="legend-item">
+                            <div class="legend-icon" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4);">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <span>Atrações</span>
+                        </div>
+                        
+                        <div class="legend-item">
+                            <div class="legend-icon" style="background: #6c757d;">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <span>Restaurantes</span>
+                        </div>
+                        
+                        <div class="legend-item">
+                            <div class="legend-icon" style="background: #28a745;">
+                                <i class="fas fa-restroom"></i>
+                            </div>
+                            <span>Banheiros</span>
+                        </div>
+                        
+                        <div class="legend-item">
+                            <div class="legend-icon" style="background: #17a2b8;">
+                                <i class="fas fa-first-aid"></i>
+                            </div>
+                            <span>Primeiros Socorros</span>
+                        </div>
+                        
+                        <div class="legend-item">
+                            <div class="legend-icon" style="background: #ffc107; color: #333;">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <span>Lojas</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Tooltip -->
+                    <div class="attraction-tooltip" id="attractionTooltip"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Informações Adicionais -->
+    <div class="row mt-5">
+        <div class="col-lg-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-clock fa-3x text-primary mb-3"></i>
+                    <h5>Tempos de Espera</h5>
+                    <p class="text-muted">Os tempos são atualizados em tempo real para sua conveniência.</p>
+                    <button class="btn btn-primary" onclick="updateWaitTimes()">
+                        <i class="fas fa-sync-alt"></i> Atualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-route fa-3x text-success mb-3"></i>
+                    <h5>Planeje sua Rota</h5>
+                    <p class="text-muted">Crie um roteiro personalizado para aproveitar ao máximo sua visita.</p>
+                    <button class="btn btn-success" onclick="showRoutePlanner()">
+                        <i class="fas fa-map-signs"></i> Criar Rota
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-mobile-alt fa-3x text-info mb-3"></i>
+                    <h5>App Mobile</h5>
+                    <p class="text-muted">Baixe nosso app para navegação offline e notificações em tempo real.</p>
+                    <button class="btn btn-info">
+                        <i class="fab fa-app-store"></i> Download
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Detalhes da Atração -->
+<div class="modal fade" id="attractionModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="attractionModalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="attractionModalBody">
+                <!-- Conteúdo será preenchido dinamicamente -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <a href="#" class="btn btn-primary" id="attractionModalLink">Ver Detalhes</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Dados do mapa vindos do Django
+const areasData = {{ areas_json|safe }};
+const atracoesData = {{ atracoes_json|safe }};
+const servicosData = {{ servicos_json|safe }};
+
+let currentZoom = 1;
+let mapPosition = { x: 0, y: 0 };
+let isDragging = false;
+let dragStart = { x: 0, y: 0 };
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeMap();
+    setupEventListeners();
+    loadMapElements();
+});
+
+function initializeMap() {
+    const map = document.getElementById('parkMap');
+    
+    // Drag para mover o mapa
+    map.addEventListener('mousedown', startDrag);
+    map.addEventListener('mousemove', drag);
+    map.addEventListener('mouseup', endDrag);
+    map.addEventListener('mouseleave', endDrag);
+    
+    // Zoom com scroll
+    map.addEventListener('wheel', handleZoom);
+    
+    // Touch events para mobile
+    map.addEventListener('touchstart', handleTouchStart);
+    map.addEventListener('touchmove', handleTouchMove);
+    map.addEventListener('touchend', handleTouchEnd);
+}
+
+function setupEventListeners() {
+    // Filtros
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            applyFilters();
+        });
+    });
+}
+
+function loadMapElements() {
+    const map = document.getElementById('parkMap');
+    
+    // Adicionar atrações
+    atracoesData.forEach(atracao => {
+        if (atracao.coordenadas && atracao.coordenadas.x && atracao.coordenadas.y) {
+            const elemento = createAttractionElement(atracao);
+            map.appendChild(elemento);
+        }
+    });
+    
+    // Adicionar serviços
+    servicosData.forEach(servico => {
+        if (servico.coordenadas && servico.coordenadas.x && servico.coordenadas.y) {
+            const elemento = createServiceElement(servico);
+            map.appendChild(elemento);
+        }
+    });
+}
+
+function createAttractionElement(atracao) {
+    const div = document.createElement('div');
+    div.className = 'map-attraction';
+    div.style.left = atracao.coordenadas.x + 'px';
+    div.style.top = atracao.coordenadas.y + 'px';
+    div.dataset.type = 'atracoes';
+    div.dataset.waitTime = getWaitTimeCategory(atracao.tempo_espera);
+    
+    // Ícone baseado na categoria
+    div.innerHTML = '<i class="fas fa-rocket"></i>';
+    
+    // Indicador de tempo de espera
+    if (atracao.tempo_espera > 0) {
+        const waitIndicator = document.createElement('div');
+        waitIndicator.className = `wait-time-indicator wait-time-${getWaitTimeCategory(atracao.tempo_espera)}`;
+        waitIndicator.textContent = atracao.tempo_espera;
+        div.appendChild(waitIndicator);
+    }
+    
+    // Eventos
+    div.addEventListener('mouseenter', function(e) {
+        showTooltip(e, atracao);
+    });
+    
+    div.addEventListener('mouseleave', function() {
+        hideTooltip();
+    });
+    
+    div.addEventListener('click', function() {
+        showAttractionModal(atracao);
+    });
+    
+    return div;
+}
+
+function createServiceElement(servico) {
+    const div = document.createElement('div');
+    div.className = 'map-service';
+    div.style.left = servico.coordenadas.x + 'px';
+    div.style.top = servico.coordenadas.y + 'px';
+    div.dataset.type = servico.tipo;
+    
+    // Ícone baseado no tipo
+    const icons = {
+        'banheiro': 'fas fa-restroom',
+        'primeiros_socorros': 'fas fa-first-aid',
+        'caixa_eletronico': 'fas fa-credit-card',
+        'loja_souvenir': 'fas fa-gift',
+        'ponto_fotografico': 'fas fa-camera',
+        'informacoes': 'fas fa-info-circle',
+        'estacionamento': 'fas fa-parking',
+        'aluguel_carrinho': 'fas fa-baby-carriage'
+    };
+    
+    div.innerHTML = `<i class="${icons[servico.tipo] || 'fas fa-map-pin'}"></i>`;
+    
+    // Tooltip
+    div.addEventListener('mouseenter', function(e) {
+        showServiceTooltip(e, servico);
+    });
+    
+    div.addEventListener('mouseleave', function() {
+        hideTooltip();
+    });
+    
+    return div;
+}
+
+function getWaitTimeCategory(tempo) {
+    if (tempo <= 15) return 'low';
+    if (tempo <= 30) return 'medium';
+    return 'high';
+}
+
+function showTooltip(event, atracao) {
+    const tooltip = document.getElementById('attractionTooltip');
+    const rect = event.target.getBoundingClientRect();
+    
+    tooltip.innerHTML = `
+        <strong>${atracao.nome}</strong><br>
+        <small>${atracao.categoria}</small><br>
+        ⭐ ${atracao.avaliacao}/5 | 🔥 ${atracao.nivel_emocao}/5<br>
+        ${atracao.tempo_espera > 0 ? `⏱️ ${atracao.tempo_espera} min` : '✅ Sem fila'}
+    `;
+    
+    tooltip.style.left = rect.left + rect.width/2 + 'px';
+    tooltip.style.top = rect.top + 'px';
+    tooltip.style.opacity = '1';
+}
+
+function showServiceTooltip(event, servico) {
+    const tooltip = document.getElementById('attractionTooltip');
+    const rect = event.target.getBoundingClientRect();
+    
+    tooltip.innerHTML = `<strong>${servico.nome}</strong><br><small>${servico.tipo.replace('_', ' ')}</small>`;
+    
+    tooltip.style.left = rect.left + rect.width/2 + 'px';
+    tooltip.style.top = rect.top + 'px';
+    tooltip.style.opacity = '1';
+}
+
+function hideTooltip() {
+    const tooltip = document.getElementById('attractionTooltip');
+    tooltip.style.opacity = '0';
+}
+
+function showAttractionModal(atracao) {
+    const modal = new bootstrap.Modal(document.getElementById('attractionModal'));
+    const title = document.getElementById('attractionModalTitle');
+    const body = document.getElementById('attractionModalBody');
+    const link = document.getElementById('attractionModalLink');
+    
+    title.textContent = atracao.nome;
+    link.href = `/atracoes/${atracao.id}/`;
+    
+    body.innerHTML = `
+        <div class="row">
+            <div class="col-md-12">
+                <h6>Informações da Atração</h6>
+                <ul class="list-unstyled">
+                    <li><strong>Categoria:</strong> ${atracao.categoria}</li>
+                    <li><strong>Avaliação:</strong> ⭐ ${atracao.avaliacao}/5</li>
+                    <li><strong>Nível de Emoção:</strong> 🔥 ${atracao.nivel_emocao}/5</li>
+                    <li><strong>Tempo de Espera:</strong> ${atracao.tempo_espera > 0 ? atracao.tempo_espera + ' min' : 'Sem fila'}</li>
+                </ul>
+            </div>
+        </div>
+    `;
+    
+    modal.show();
+}
+
+function applyFilters() {
+    const activeFilters = Array.from(document.querySelectorAll('.filter-btn.active'))
+        .map(btn => btn.dataset.filter || btn.dataset.wait);
+    
+    document.querySelectorAll('.map-attraction, .map-service').forEach(element => {
+        const type = element.dataset.type;
+        const waitTime = element.dataset.waitTime;
+        
+        let show = activeFilters.includes(type) || activeFilters.includes(waitTime);
+        element.style.display = show ? 'flex' : 'none';
+    });
+}
+
+// Controles do mapa
+function zoomIn() {
+    currentZoom = Math.min(currentZoom * 1.2, 3);
+    applyTransform();
+}
+
+function zoomOut() {
+    currentZoom = Math.max(currentZoom / 1.2, 0.5);
+    applyTransform();
+}
+
+function resetView() {
+    currentZoom = 1;
+    mapPosition = { x: 0, y: 0 };
+    applyTransform();
+}
+
+function toggleFullscreen() {
+    const mapContainer = document.querySelector('.map-container');
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        mapContainer.requestFullscreen();
+    }
+}
+
+function applyTransform() {
+    const map = document.getElementById('parkMap');
+    map.style.transform = `translate(${mapPosition.x}px, ${mapPosition.y}px) scale(${currentZoom})`;
+}
+
+// Drag functions
+function startDrag(e) {
+    isDragging = true;
+    dragStart = { x: e.clientX - mapPosition.x, y: e.clientY - mapPosition.y };
+}
+
+function drag(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    mapPosition = { x: e.clientX - dragStart.x, y: e.clientY - dragStart.y };
+    applyTransform();
+}
+
+function endDrag() {
+    isDragging = false;
+}
+
+function handleZoom(e) {
+    e.preventDefault();
+    if (e.deltaY < 0) {
+        zoomIn();
+    } else {
+        zoomOut();
+    }
+}
+
+// Touch events
+let touchStart = { x: 0, y: 0 };
+
+function handleTouchStart(e) {
+    touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+}
+
+function handleTouchMove(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
+    
+    mapPosition.x += deltaX;
+    mapPosition.y += deltaY;
+    
+    touchStart = { x: touch.clientX, y: touch.clientY };
+    applyTransform();
+}
+
+function handleTouchEnd() {
+    // Touch end logic if needed
+}
+
+// Atualizar tempos de espera
+function updateWaitTimes() {
+    fetch('/atracoes/api/tempos-espera/')
+        .then(response => response.json())
+        .then(data => {
+            // Atualizar elementos no mapa com novos tempos
+            data.atracoes.forEach(atracao => {
+                const elemento = document.querySelector(`[data-attraction-id="${atracao.id}"]`);
+                if (elemento) {
+                    // Atualizar indicador de tempo
+                    const indicator = elemento.querySelector('.wait-time-indicator');
+                    if (indicator) {
+                        indicator.textContent = atracao.tempo_espera;
+                        indicator.className = `wait-time-indicator wait-time-${getWaitTimeCategory(atracao.tempo_espera)}`;
+                    }
+                }
+            });
+            
+            // Mostrar notificação
+            alert('Tempos de espera atualizados!');
+        })
+        .catch(error => {
+            console.error('Erro ao atualizar tempos:', error);
+        });
+}
+
+function showRoutePlanner() {
+    alert('Funcionalidade de planejamento de rota em desenvolvimento!');
+}
+</script>
+{% endblock %}

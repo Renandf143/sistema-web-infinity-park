@@ -1,0 +1,394 @@
+{% extends 'base.html' %}
+
+{% block title %}Meus Favoritos - Infinity Park{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-heart text-danger"></i>
+                Minhas Atrações Favoritas
+            </h1>
+            <p class="lead text-muted">Suas atrações favoritas em um só lugar para fácil acesso!</p>
+        </div>
+    </div>
+    
+    {% if favoritos %}
+        <!-- Lista de Favoritos -->
+        <div class="row g-4">
+            {% for favorito in favoritos %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card attraction-card h-100">
+                        <div class="position-relative">
+                            <img src="{{ favorito.atracao.imagem_principal }}" 
+                                 alt="{{ favorito.atracao.nome }}" 
+                                 class="attraction-image card-img-top"
+                                 style="height: 250px; object-fit: cover;">
+                            
+                            <!-- Tempo de Espera -->
+                            <div class="wait-time-badge">
+                                {% if favorito.atracao.tempo_espera == 0 %}
+                                    <i class="fas fa-check-circle text-success"></i> Sem fila
+                                {% elif favorito.atracao.tempo_espera <= 15 %}
+                                    <i class="fas fa-clock text-success"></i> {{ favorito.atracao.tempo_espera }} min
+                                {% elif favorito.atracao.tempo_espera <= 30 %}
+                                    <i class="fas fa-clock text-warning"></i> {{ favorito.atracao.tempo_espera }} min
+                                {% else %}
+                                    <i class="fas fa-clock text-danger"></i> {{ favorito.atracao.tempo_espera }} min
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Fast Pass -->
+                            {% if favorito.atracao.fast_pass_disponivel %}
+                                <div class="position-absolute top-0 start-0 m-3">
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fas fa-bolt"></i> Fast Pass
+                                    </span>
+                                </div>
+                            {% endif %}
+                            
+                            <!-- Botão Remover Favorito -->
+                            <button class="btn btn-link position-absolute top-0 end-0 m-2 p-1" 
+                                    onclick="removeFavorite({{ favorito.atracao.id }}, this)"
+                                    style="background: rgba(255,255,255,0.9); border-radius: 50%; width: 40px; height: 40px;"
+                                    title="Remover dos favoritos">
+                                <i class="fas fa-heart text-danger"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="card-body d-flex flex-column">
+                            <!-- Header -->
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title fw-bold mb-0">{{ favorito.atracao.nome }}</h5>
+                                <span class="badge" style="background-color: {{ favorito.atracao.categoria.cor }}">
+                                    {{ favorito.atracao.categoria.nome }}
+                                </span>
+                            </div>
+                            
+                            <!-- Área -->
+                            <p class="text-muted small mb-2">
+                                <i class="fas fa-map-marker-alt"></i> {{ favorito.atracao.area.nome }}
+                            </p>
+                            
+                            <!-- Descrição -->
+                            <p class="card-text text-muted flex-grow-1">{{ favorito.atracao.descricao_curta }}</p>
+                            
+                            <!-- Informações -->
+                            <div class="row g-2 mb-3 text-center">
+                                <div class="col-4">
+                                    <small class="text-muted d-block">Duração</small>
+                                    <strong>{{ favorito.atracao.duracao }}min</strong>
+                                </div>
+                                <div class="col-4">
+                                    <small class="text-muted d-block">Emoção</small>
+                                    <div class="thrill-level justify-content-center">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= favorito.atracao.nivel_emocao %}
+                                                <i class="fas fa-fire text-warning"></i>
+                                            {% else %}
+                                                <i class="far fa-fire text-muted"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <small class="text-muted d-block">Avaliação</small>
+                                    {% if favorito.atracao.avaliacao > 0 %}
+                                        <strong class="text-warning">{{ favorito.atracao.avaliacao|floatformat:1 }}★</strong>
+                                    {% else %}
+                                        <small class="text-muted">S/A</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <!-- Data de Adição -->
+                            <div class="mb-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar-plus"></i> 
+                                    Adicionado em {{ favorito.criado_em|date:"d/m/Y" }}
+                                </small>
+                            </div>
+                            
+                            <!-- Botões -->
+                            <div class="mt-auto">
+                                <div class="d-grid gap-2">
+                                    <a href="{% url 'atracoes:detalhe' favorito.atracao.id %}" class="btn btn-primary">
+                                        <i class="fas fa-info-circle"></i> Ver Detalhes
+                                    </a>
+                                    <button class="btn btn-outline-secondary btn-sm" 
+                                            onclick="shareAttraction({{ favorito.atracao.id }}, '{{ favorito.atracao.nome }}')">
+                                        <i class="fas fa-share"></i> Compartilhar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Estatísticas -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-chart-bar"></i> Suas Estatísticas
+                        </h5>
+                        
+                        <div class="row text-center">
+                            <div class="col-md-3">
+                                <div class="stat-item">
+                                    <h3 class="display-6 fw-bold text-primary">{{ favoritos.count }}</h3>
+                                    <p class="text-muted">Atrações Favoritas</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-item">
+                                    <h3 class="display-6 fw-bold text-success">
+                                        {% with total_duration=0 %}
+                                            {% for favorito in favoritos %}
+                                                {% widthratio favorito.atracao.duracao 1 1 as duration %}
+                                                {% add total_duration duration as total_duration %}
+                                            {% endfor %}
+                                            {{ total_duration|default:0 }}
+                                        {% endwith %}
+                                    </h3>
+                                    <p class="text-muted">Minutos de Diversão</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-item">
+                                    <h3 class="display-6 fw-bold text-warning">
+                                        {% with areas=favoritos|length %}
+                                            {% regroup favoritos by atracao.area as areas_grouped %}
+                                            {{ areas_grouped|length }}
+                                        {% endwith %}
+                                    </h3>
+                                    <p class="text-muted">Áreas Exploradas</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="stat-item">
+                                    <h3 class="display-6 fw-bold text-info">
+                                        {% with fast_pass_count=0 %}
+                                            {% for favorito in favoritos %}
+                                                {% if favorito.atracao.fast_pass_disponivel %}
+                                                    {% add fast_pass_count 1 as fast_pass_count %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            {{ fast_pass_count }}
+                                        {% endwith %}
+                                    </h3>
+                                    <p class="text-muted">Com Fast Pass</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ações Rápidas -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Ações Rápidas</h5>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-primary" onclick="planRoute()">
+                                <i class="fas fa-route"></i> Planejar Rota
+                            </button>
+                            <button type="button" class="btn btn-outline-success" onclick="exportFavorites()">
+                                <i class="fas fa-download"></i> Exportar Lista
+                            </button>
+                            <a href="{% url 'atracoes:mapa' %}" class="btn btn-outline-info">
+                                <i class="fas fa-map"></i> Ver no Mapa
+                            </a>
+                            <a href="{% url 'atracoes:lista' %}" class="btn btn-outline-warning">
+                                <i class="fas fa-plus"></i> Adicionar Mais
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    {% else %}
+        <!-- Estado Vazio -->
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card text-center">
+                    <div class="card-body py-5">
+                        <i class="fas fa-heart-broken fa-5x text-muted mb-4"></i>
+                        <h3>Nenhuma Atração Favorita</h3>
+                        <p class="text-muted mb-4">
+                            Você ainda não adicionou nenhuma atração aos seus favoritos. 
+                            Explore nosso parque e marque suas atrações preferidas!
+                        </p>
+                        
+                        <div class="d-grid gap-2 d-md-block">
+                            <a href="{% url 'atracoes:lista' %}" class="btn btn-primary">
+                                <i class="fas fa-rocket"></i> Explorar Atrações
+                            </a>
+                            <a href="{% url 'atracoes:mapa' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-map"></i> Ver Mapa do Parque
+                            </a>
+                        </div>
+                        
+                        <!-- Dicas -->
+                        <div class="mt-4 p-3 bg-light rounded">
+                            <h6 class="fw-bold">💡 Dica:</h6>
+                            <p class="small mb-0">
+                                Clique no ícone de coração ❤️ em qualquer atração para adicioná-la aos seus favoritos!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function removeFavorite(atracaoId, button) {
+    if (confirm('Tem certeza que deseja remover esta atração dos favoritos?')) {
+        fetch(`/atracoes/${atracaoId}/favoritar/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.favoritado) {
+                // Remover o card da página
+                const card = button.closest('.col-lg-4');
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.8)';
+                
+                setTimeout(() => {
+                    card.remove();
+                    
+                    // Verificar se não há mais favoritos
+                    const remainingCards = document.querySelectorAll('.attraction-card').length;
+                    if (remainingCards === 0) {
+                        window.location.reload();
+                    }
+                }, 500);
+                
+                showToast(data.mensagem, 'success');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            showToast('Erro ao remover favorito', 'error');
+        });
+    }
+}
+
+function shareAttraction(atracaoId, nome) {
+    if (navigator.share) {
+        navigator.share({
+            title: `${nome} - Infinity Park`,
+            text: `Confira esta atração incrível no Infinity Park: ${nome}`,
+            url: window.location.origin + `/atracoes/${atracaoId}/`
+        });
+    } else {
+        // Fallback para navegadores que não suportam Web Share API
+        const url = window.location.origin + `/atracoes/${atracaoId}/`;
+        navigator.clipboard.writeText(url).then(() => {
+            showToast('Link copiado para a área de transferência!', 'success');
+        });
+    }
+}
+
+function planRoute() {
+    const atracaoIds = [...document.querySelectorAll('[onclick*="removeFavorite"]')]
+        .map(btn => btn.getAttribute('onclick').match(/\d+/)[0]);
+    
+    if (atracaoIds.length === 0) {
+        showToast('Nenhuma atração favorita para planejar rota', 'warning');
+        return;
+    }
+    
+    // Simular planejamento de rota (implementar lógica real depois)
+    showToast('Funcionalidade de planejamento de rota em desenvolvimento!', 'info');
+}
+
+function exportFavorites() {
+    const favorites = [...document.querySelectorAll('.attraction-card')].map(card => {
+        const title = card.querySelector('.card-title').textContent;
+        const area = card.querySelector('[class*="map-marker"]').parentElement.textContent.trim();
+        const duration = card.querySelector('strong').textContent;
+        
+        return `• ${title} (${area}) - ${duration}`;
+    });
+    
+    if (favorites.length === 0) {
+        showToast('Nenhuma atração favorita para exportar', 'warning');
+        return;
+    }
+    
+    const text = `Minhas Atrações Favoritas - Infinity Park\n\n${favorites.join('\n')}\n\nGerado em ${new Date().toLocaleDateString()}`;
+    
+    // Criar e baixar arquivo
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'infinity-park-favoritos.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showToast('Lista de favoritos exportada!', 'success');
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type === 'error' ? 'danger' : type} position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close float-end" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        if (document.body.contains(toast)) {
+            document.body.removeChild(toast);
+        }
+    }, 5000);
+}
+
+// Adicionar contador animado se houver favoritos
+document.addEventListener('DOMContentLoaded', function() {
+    const stats = document.querySelectorAll('.stat-item h3');
+    
+    stats.forEach(stat => {
+        const target = parseInt(stat.textContent);
+        const increment = target / 50;
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                stat.textContent = target;
+                clearInterval(timer);
+            } else {
+                stat.textContent = Math.floor(current);
+            }
+        }, 30);
+    });
+});
+</script>
+{% endblock %}

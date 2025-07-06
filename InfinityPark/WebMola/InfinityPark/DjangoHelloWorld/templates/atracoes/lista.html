@@ -1,0 +1,441 @@
+{% extends 'base.html' %}
+
+{% block title %}Atrações - Infinity Park{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-rocket text-primary"></i>
+                Todas as Atrações
+            </h1>
+            <p class="lead text-muted">Descubra aventuras emocionantes para toda a família!</p>
+        </div>
+    </div>
+    
+    <!-- Filtros -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">
+                        <i class="fas fa-filter"></i> Filtros
+                    </h5>
+                    
+                    <form method="get" class="row g-3">
+                        <!-- Busca -->
+                        <div class="col-md-4">
+                            <label class="form-label">Buscar</label>
+                            <input type="text" name="busca" class="form-control" 
+                                   placeholder="Nome da atração..." 
+                                   value="{{ filtros_aplicados.busca }}">
+                        </div>
+                        
+                        <!-- Categoria -->
+                        <div class="col-md-3">
+                            <label class="form-label">Categoria</label>
+                            <select name="categoria" class="form-select">
+                                <option value="">Todas as categorias</option>
+                                {% for categoria in categorias %}
+                                    <option value="{{ categoria.id }}" 
+                                            {% if filtros_aplicados.categoria == categoria.id|stringformat:"s" %}selected{% endif %}>
+                                        {{ categoria.nome }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <!-- Área -->
+                        <div class="col-md-3">
+                            <label class="form-label">Área do Parque</label>
+                            <select name="area" class="form-select">
+                                <option value="">Todas as áreas</option>
+                                {% for area in areas %}
+                                    <option value="{{ area.id }}" 
+                                            {% if filtros_aplicados.area == area.id|stringformat:"s" %}selected{% endif %}>
+                                        {{ area.nome }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <!-- Nível de Emoção -->
+                        <div class="col-md-2">
+                            <label class="form-label">Emoção</label>
+                            <select name="nivel_emocao" class="form-select">
+                                <option value="">Todos</option>
+                                <option value="1" {% if filtros_aplicados.nivel_emocao == "1" %}selected{% endif %}>⭐ Suave</option>
+                                <option value="2" {% if filtros_aplicados.nivel_emocao == "2" %}selected{% endif %}>⭐⭐ Leve</option>
+                                <option value="3" {% if filtros_aplicados.nivel_emocao == "3" %}selected{% endif %}>⭐⭐⭐ Moderado</option>
+                                <option value="4" {% if filtros_aplicados.nivel_emocao == "4" %}selected{% endif %}>⭐⭐⭐⭐ Intenso</option>
+                                <option value="5" {% if filtros_aplicados.nivel_emocao == "5" %}selected{% endif %}>⭐⭐⭐⭐⭐ Extremo</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Ordenação -->
+                        <div class="col-md-6">
+                            <label class="form-label">Ordenar por</label>
+                            <select name="ordem" class="form-select">
+                                <option value="nome" {% if filtros_aplicados.ordem == "nome" %}selected{% endif %}>Nome A-Z</option>
+                                <option value="avaliacao" {% if filtros_aplicados.ordem == "avaliacao" %}selected{% endif %}>Melhor Avaliação</option>
+                                <option value="tempo_espera" {% if filtros_aplicados.ordem == "tempo_espera" %}selected{% endif %}>Menor Tempo de Espera</option>
+                                <option value="emocao" {% if filtros_aplicados.ordem == "emocao" %}selected{% endif %}>Maior Emoção</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Botões -->
+                        <div class="col-md-6 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary me-2">
+                                <i class="fas fa-search"></i> Filtrar
+                            </button>
+                            <a href="{% url 'atracoes:lista' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-times"></i> Limpar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Resultados -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <p class="text-muted">
+                {% if atracoes.paginator.count %}
+                    Mostrando {{ atracoes.start_index }}-{{ atracoes.end_index }} de {{ atracoes.paginator.count }} atrações
+                {% else %}
+                    Nenhuma atração encontrada
+                {% endif %}
+            </p>
+        </div>
+        <div class="col-md-6 text-end">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary active" onclick="setView('grid')">
+                    <i class="fas fa-th"></i> Grid
+                </button>
+                <button type="button" class="btn btn-outline-primary" onclick="setView('list')">
+                    <i class="fas fa-list"></i> Lista
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Grid de Atrações -->
+    <div id="gridView" class="row g-4">
+        {% for atracao in atracoes %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card attraction-card h-100">
+                    <div class="position-relative">
+                        <img src="{{ atracao.imagem_principal }}" 
+                             alt="{{ atracao.nome }}" 
+                             class="attraction-image card-img-top"
+                             style="height: 250px; object-fit: cover;">
+                        
+                        <!-- Tempo de Espera -->
+                        <div class="wait-time-badge">
+                            {% if atracao.tempo_espera == 0 %}
+                                <i class="fas fa-check-circle text-success"></i> Sem fila
+                            {% elif atracao.tempo_espera <= 15 %}
+                                <i class="fas fa-clock text-success"></i> {{ atracao.tempo_espera }} min
+                            {% elif atracao.tempo_espera <= 30 %}
+                                <i class="fas fa-clock text-warning"></i> {{ atracao.tempo_espera }} min
+                            {% else %}
+                                <i class="fas fa-clock text-danger"></i> {{ atracao.tempo_espera }} min
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Fast Pass -->
+                        {% if atracao.fast_pass_disponivel %}
+                            <div class="position-absolute top-0 start-0 m-3">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="fas fa-bolt"></i> Fast Pass
+                                </span>
+                            </div>
+                        {% endif %}
+                        
+                        <!-- Favorito -->
+                        {% if user.is_authenticated %}
+                            <button class="btn btn-link position-absolute top-0 end-0 m-2 p-1" 
+                                    onclick="toggleFavorite({{ atracao.id }}, this)"
+                                    style="background: rgba(255,255,255,0.8); border-radius: 50%; width: 40px; height: 40px;">
+                                <i class="fas fa-heart text-danger"></i>
+                            </button>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="card-body d-flex flex-column">
+                        <!-- Header -->
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title fw-bold mb-0">{{ atracao.nome }}</h5>
+                            <span class="badge" style="background-color: {{ atracao.categoria.cor }}">
+                                {{ atracao.categoria.nome }}
+                            </span>
+                        </div>
+                        
+                        <!-- Área -->
+                        <p class="text-muted small mb-2">
+                            <i class="fas fa-map-marker-alt"></i> {{ atracao.area.nome }}
+                        </p>
+                        
+                        <!-- Descrição -->
+                        <p class="card-text text-muted flex-grow-1">{{ atracao.descricao_curta }}</p>
+                        
+                        <!-- Informações -->
+                        <div class="row g-2 mb-3 text-center">
+                            <div class="col-4">
+                                <small class="text-muted d-block">Duração</small>
+                                <strong>{{ atracao.duracao }}min</strong>
+                            </div>
+                            <div class="col-4">
+                                <small class="text-muted d-block">Emoção</small>
+                                <div class="thrill-level justify-content-center">
+                                    {% for i in "12345" %}
+                                        {% if forloop.counter <= atracao.nivel_emocao %}
+                                            <i class="fas fa-fire text-warning"></i>
+                                        {% else %}
+                                            <i class="far fa-fire text-muted"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <small class="text-muted d-block">Avaliação</small>
+                                {% if atracao.avaliacao > 0 %}
+                                    <strong class="text-warning">{{ atracao.avaliacao|floatformat:1 }}★</strong>
+                                {% else %}
+                                    <small class="text-muted">S/A</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <!-- Acessibilidade -->
+                        <div class="accessibility-icons mb-3 text-center">
+                            {% if atracao.acessivel_cadeirante %}
+                                <i class="fas fa-wheelchair text-success me-2" title="Acessível para cadeirantes"></i>
+                            {% endif %}
+                            {% if atracao.acesso_deficiente_auditivo %}
+                                <i class="fas fa-deaf text-info me-2" title="Acessível para deficientes auditivos"></i>
+                            {% endif %}
+                            {% if atracao.acesso_deficiente_visual %}
+                                <i class="fas fa-eye-slash text-primary me-2" title="Acessível para deficientes visuais"></i>
+                            {% endif %}
+                            {% if atracao.altura_minima %}
+                                <span class="badge bg-info" title="Altura mínima">
+                                    {{ atracao.altura_minima }}cm+
+                                </span>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Botões -->
+                        <div class="mt-auto">
+                            <a href="{% url 'atracoes:detalhe' atracao.id %}" class="btn btn-primary w-100">
+                                <i class="fas fa-info-circle"></i> Ver Detalhes
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h4>Nenhuma atração encontrada</h4>
+                        <p class="text-muted">Tente ajustar os filtros ou remover alguns critérios de busca.</p>
+                        <a href="{% url 'atracoes:lista' %}" class="btn btn-primary">
+                            <i class="fas fa-refresh"></i> Ver Todas as Atrações
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Lista View (Oculta por padrão) -->
+    <div id="listView" class="d-none">
+        {% for atracao in atracoes %}
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-3">
+                        <img src="{{ atracao.imagem_principal }}" 
+                             alt="{{ atracao.nome }}" 
+                             class="img-fluid h-100 w-100" 
+                             style="object-fit: cover;">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title">{{ atracao.nome }}</h5>
+                                <div>
+                                    <span class="badge" style="background-color: {{ atracao.categoria.cor }}">
+                                        {{ atracao.categoria.nome }}
+                                    </span>
+                                    {% if atracao.fast_pass_disponivel %}
+                                        <span class="badge bg-warning text-dark ms-1">Fast Pass</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <p class="text-muted mb-2">
+                                <i class="fas fa-map-marker-alt"></i> {{ atracao.area.nome }}
+                            </p>
+                            
+                            <p class="card-text">{{ atracao.descricao_curta }}</p>
+                            
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-2">
+                                    <small class="text-muted d-block">Tempo Espera</small>
+                                    <strong>{{ atracao.get_tempo_espera_texto }}</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    <small class="text-muted d-block">Duração</small>
+                                    <strong>{{ atracao.duracao }}min</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    <small class="text-muted d-block">Emoção</small>
+                                    <strong>{{ atracao.get_nivel_emocao_texto }}</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    <small class="text-muted d-block">Avaliação</small>
+                                    {% if atracao.avaliacao > 0 %}
+                                        <strong class="text-warning">{{ atracao.avaliacao|floatformat:1 }}★</strong>
+                                    {% else %}
+                                        <small class="text-muted">Sem avaliações</small>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <a href="{% url 'atracoes:detalhe' atracao.id %}" class="btn btn-primary">
+                                        <i class="fas fa-info-circle"></i> Ver Detalhes
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Paginação -->
+    {% if atracoes.has_other_pages %}
+        <nav aria-label="Navegação de páginas" class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if atracoes.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ atracoes.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                            <i class="fas fa-angle-left"></i>
+                        </a>
+                    </li>
+                {% endif %}
+                
+                {% for num in atracoes.paginator.page_range %}
+                    {% if num == atracoes.number %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+                    {% elif num > atracoes.number|add:'-3' and num < atracoes.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ num }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                
+                {% if atracoes.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ atracoes.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                            <i class="fas fa-angle-right"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ atracoes.paginator.num_pages }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function setView(view) {
+    const gridView = document.getElementById('gridView');
+    const listView = document.getElementById('listView');
+    const buttons = document.querySelectorAll('.btn-group button');
+    
+    buttons.forEach(btn => btn.classList.remove('active'));
+    
+    if (view === 'grid') {
+        gridView.classList.remove('d-none');
+        listView.classList.add('d-none');
+        buttons[0].classList.add('active');
+    } else {
+        gridView.classList.add('d-none');
+        listView.classList.remove('d-none');
+        buttons[1].classList.add('active');
+    }
+    
+    localStorage.setItem('preferredView', view);
+}
+
+function toggleFavorite(atracaoId, button) {
+    fetch(`/atracoes/${atracaoId}/favoritar/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const icon = button.querySelector('i');
+        if (data.favoritado) {
+            icon.classList.remove('far');
+            icon.classList.add('fas');
+        } else {
+            icon.classList.remove('fas');
+            icon.classList.add('far');
+        }
+        
+        // Mostrar notificação
+        const toast = document.createElement('div');
+        toast.className = 'toast position-fixed top-0 end-0 m-3';
+        toast.innerHTML = `
+            <div class="toast-header">
+                <strong class="me-auto">Infinity Park</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">${data.mensagem}</div>
+        `;
+        document.body.appendChild(toast);
+        
+        const bsToast = new bootstrap.Toast(toast);
+        bsToast.show();
+        
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 5000);
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Erro ao atualizar favorito');
+    });
+}
+
+// Carregar visualização preferida
+document.addEventListener('DOMContentLoaded', function() {
+    const preferredView = localStorage.getItem('preferredView') || 'grid';
+    setView(preferredView);
+});
+</script>
+{% endblock %}

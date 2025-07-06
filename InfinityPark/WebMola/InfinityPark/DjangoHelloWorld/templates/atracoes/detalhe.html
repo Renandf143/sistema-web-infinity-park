@@ -1,0 +1,788 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ atracao.nome }} - Infinity Park{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-image {
+        height: 400px;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+    
+    .gallery-thumb {
+        height: 80px;
+        object-fit: cover;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 3px solid transparent;
+    }
+    
+    .gallery-thumb:hover,
+    .gallery-thumb.active {
+        border-color: var(--primary-color);
+        transform: scale(1.05);
+    }
+    
+    .info-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .info-item {
+        text-align: center;
+        padding: 20px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 15px;
+        margin-bottom: 20px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .rating-stars {
+        color: #ffd700;
+        font-size: 1.5rem;
+    }
+    
+    .wait-time-card {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        color: white;
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .accessibility-card {
+        border: none;
+        border-radius: 15px;
+        background: #f8f9fa;
+    }
+    
+    .accessibility-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .accessibility-item:last-child {
+        border-bottom: none;
+    }
+    
+    .thrill-meter {
+        display: flex;
+        gap: 5px;
+        justify-content: center;
+        margin: 10px 0;
+    }
+    
+    .thrill-bar {
+        width: 30px;
+        height: 8px;
+        background: #e9ecef;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+    
+    .thrill-bar.active {
+        background: linear-gradient(45deg, #ff6b6b, #ffd43b);
+    }
+    
+    .review-card {
+        border-left: 4px solid var(--primary-color);
+        background: #f8f9fa;
+        margin-bottom: 20px;
+    }
+    
+    .similar-attraction {
+        position: relative;
+        overflow: hidden;
+        border-radius: 15px;
+        height: 200px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    
+    .similar-attraction:hover {
+        transform: scale(1.05);
+    }
+    
+    .similar-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        color: white;
+        padding: 20px;
+    }
+    
+    .favorite-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    
+    .favorite-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+    
+    .timeline-item {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 20px;
+    }
+    
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: 10px;
+        top: 0;
+        bottom: -20px;
+        width: 2px;
+        background: var(--primary-color);
+    }
+    
+    .timeline-item::after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 6px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--primary-color);
+    }
+    
+    .timeline-item:last-child::before {
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'atracoes:home' %}">Início</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'atracoes:lista' %}">Atrações</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'atracoes:lista' %}?area={{ atracao.area.id }}">{{ atracao.area.nome }}</a></li>
+            <li class="breadcrumb-item active">{{ atracao.nome }}</li>
+        </ol>
+    </nav>
+    
+    <div class="row">
+        <!-- Coluna Principal -->
+        <div class="col-lg-8">
+            <!-- Galeria de Imagens -->
+            <div class="mb-4">
+                <img id="mainImage" src="{{ atracao.imagem_principal }}" 
+                     alt="{{ atracao.nome }}" 
+                     class="img-fluid hero-image w-100">
+                
+                {% if atracao.galeria_imagens %}
+                    <div class="row g-2 mt-3">
+                        <div class="col">
+                            <img src="{{ atracao.imagem_principal }}" 
+                                 alt="{{ atracao.nome }}" 
+                                 class="img-fluid gallery-thumb active w-100"
+                                 onclick="changeMainImage(this.src)">
+                        </div>
+                        {% for imagem in atracao.galeria_imagens %}
+                            <div class="col">
+                                <img src="{{ imagem }}" 
+                                     alt="{{ atracao.nome }}" 
+                                     class="img-fluid gallery-thumb w-100"
+                                     onclick="changeMainImage(this.src)">
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Informações Principais -->
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h1 class="display-5 fw-bold mb-2">{{ atracao.nome }}</h1>
+                            <p class="text-muted mb-2">
+                                <i class="fas fa-map-marker-alt"></i> {{ atracao.area.nome }} • 
+                                <span class="badge" style="background-color: {{ atracao.categoria.cor }}">
+                                    {{ atracao.categoria.nome }}
+                                </span>
+                            </p>
+                        </div>
+                        
+                        <!-- Avaliação -->
+                        {% if atracao.avaliacao > 0 %}
+                            <div class="text-end">
+                                <div class="rating-stars">
+                                    {% for i in "12345" %}
+                                        {% if forloop.counter <= atracao.avaliacao %}
+                                            <i class="fas fa-star"></i>
+                                        {% else %}
+                                            <i class="far fa-star"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <small class="text-muted">
+                                    {{ atracao.avaliacao|floatformat:1 }}/5 ({{ atracao.numero_avaliacoes }} avaliações)
+                                </small>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Descrição -->
+                    <p class="lead mb-4">{{ atracao.descricao_curta }}</p>
+                    <div class="mb-4">
+                        {{ atracao.descricao|linebreaks }}
+                    </div>
+                    
+                    <!-- Nível de Emoção -->
+                    <div class="mb-4">
+                        <h6 class="fw-bold mb-2">Nível de Emoção: {{ atracao.get_nivel_emocao_texto }}</h6>
+                        <div class="thrill-meter">
+                            {% for i in "12345" %}
+                                <div class="thrill-bar {% if forloop.counter <= atracao.nivel_emocao %}active{% endif %}"></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Tags e Características -->
+                    <div class="mb-4">
+                        {% if atracao.fast_pass_disponivel %}
+                            <span class="badge bg-warning text-dark me-2 mb-2">
+                                <i class="fas fa-bolt"></i> Fast Pass Disponível
+                            </span>
+                        {% endif %}
+                        
+                        {% if atracao.altura_minima %}
+                            <span class="badge bg-info me-2 mb-2">
+                                <i class="fas fa-ruler"></i> Altura mín: {{ atracao.altura_minima }}cm
+                            </span>
+                        {% endif %}
+                        
+                        {% if atracao.acessivel_cadeirante %}
+                            <span class="badge bg-success me-2 mb-2">
+                                <i class="fas fa-wheelchair"></i> Acessível
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Abas de Informações -->
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <ul class="nav nav-tabs mb-4" id="atracaoTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab">
+                                <i class="fas fa-info-circle"></i> Informações
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="acessibilidade-tab" data-bs-toggle="tab" data-bs-target="#acessibilidade" type="button" role="tab">
+                                <i class="fas fa-universal-access"></i> Acessibilidade
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="avaliacoes-tab" data-bs-toggle="tab" data-bs-target="#avaliacoes" type="button" role="tab">
+                                <i class="fas fa-star"></i> Avaliações
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="horarios-tab" data-bs-toggle="tab" data-bs-target="#horarios" type="button" role="tab">
+                                <i class="fas fa-clock"></i> Horários
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content" id="atracaoTabsContent">
+                        <!-- Aba Informações -->
+                        <div class="tab-pane fade show active" id="info" role="tabpanel">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold mb-3">Especificações</h6>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="fas fa-clock text-primary me-2"></i>
+                                            <strong>Duração:</strong> {{ atracao.duracao }} minutos
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-users text-primary me-2"></i>
+                                            <strong>Capacidade:</strong> {{ atracao.capacidade }} pessoas
+                                        </li>
+                                        {% if atracao.altura_minima %}
+                                            <li class="mb-2">
+                                                <i class="fas fa-ruler text-primary me-2"></i>
+                                                <strong>Altura mínima:</strong> {{ atracao.altura_minima }}cm
+                                            </li>
+                                        {% endif %}
+                                        {% if atracao.altura_maxima %}
+                                            <li class="mb-2">
+                                                <i class="fas fa-ruler text-danger me-2"></i>
+                                                <strong>Altura máxima:</strong> {{ atracao.altura_maxima }}cm
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold mb-3">Funcionamento</h6>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="fas fa-sun text-warning me-2"></i>
+                                            <strong>Abertura:</strong> {{ atracao.horario_abertura }}
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-moon text-info me-2"></i>
+                                            <strong>Fechamento:</strong> {{ atracao.horario_fechamento }}
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-{{ atracao.ativa|yesno:'check,times' }} text-{{ atracao.ativa|yesno:'success,danger' }} me-2"></i>
+                                            <strong>Status:</strong> {{ atracao.ativa|yesno:"Ativa,Inativa" }}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Aba Acessibilidade -->
+                        <div class="tab-pane fade" id="acessibilidade" role="tabpanel">
+                            <div class="accessibility-card card">
+                                <div class="card-body">
+                                    <div class="accessibility-item">
+                                        <i class="fas fa-wheelchair fa-2x me-3 text-{{ atracao.acessivel_cadeirante|yesno:'success,danger' }}"></i>
+                                        <div>
+                                            <strong>Acessibilidade para Cadeirantes</strong>
+                                            <br>
+                                            <small class="text-muted">
+                                                {% if atracao.acessivel_cadeirante %}
+                                                    Esta atração é totalmente acessível para pessoas em cadeiras de rodas.
+                                                {% else %}
+                                                    Esta atração não é acessível para cadeiras de rodas devido às características da experiência.
+                                                {% endif %}
+                                            </small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="accessibility-item">
+                                        <i class="fas fa-deaf fa-2x me-3 text-{{ atracao.acesso_deficiente_auditivo|yesno:'success,danger' }}"></i>
+                                        <div>
+                                            <strong>Deficiência Auditiva</strong>
+                                            <br>
+                                            <small class="text-muted">
+                                                {% if atracao.acesso_deficiente_auditivo %}
+                                                    Recursos especiais disponíveis para pessoas com deficiência auditiva.
+                                                {% else %}
+                                                    Esta atração pode ter limitações para pessoas com deficiência auditiva.
+                                                {% endif %}
+                                            </small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="accessibility-item">
+                                        <i class="fas fa-eye-slash fa-2x me-3 text-{{ atracao.acesso_deficiente_visual|yesno:'success,danger' }}"></i>
+                                        <div>
+                                            <strong>Deficiência Visual</strong>
+                                            <br>
+                                            <small class="text-muted">
+                                                {% if atracao.acesso_deficiente_visual %}
+                                                    Recursos especiais disponíveis para pessoas com deficiência visual.
+                                                {% else %}
+                                                    Esta atração pode ter limitações para pessoas com deficiência visual.
+                                                {% endif %}
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Aba Avaliações -->
+                        <div class="tab-pane fade" id="avaliacoes" role="tabpanel">
+                            {% if user.is_authenticated and pode_avaliar %}
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h6 class="fw-bold mb-3">Deixe sua Avaliação</h6>
+                                        <form method="post" action="{% url 'atracoes:avaliar' atracao.id %}">
+                                            {% csrf_token %}
+                                            <div class="mb-3">
+                                                <label class="form-label">Nota (1-5 estrelas)</label>
+                                                <div class="rating-input">
+                                                    {% for i in "12345" %}
+                                                        <input type="radio" name="nota" value="{{ forloop.counter }}" id="star{{ forloop.counter }}" required>
+                                                        <label for="star{{ forloop.counter }}" class="star-label">
+                                                            <i class="fas fa-star"></i>
+                                                        </label>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Comentário (opcional)</label>
+                                                <textarea name="comentario" class="form-control" rows="3" 
+                                                         placeholder="Conte-nos sobre sua experiência..."></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-star"></i> Enviar Avaliação
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            {% for avaliacao in avaliacoes %}
+                                <div class="review-card card">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <strong>{{ avaliacao.usuario.first_name|default:avaliacao.usuario.username }}</strong>
+                                                <div class="rating-stars">
+                                                    {% for i in "12345" %}
+                                                        {% if forloop.counter <= avaliacao.nota %}
+                                                            <i class="fas fa-star"></i>
+                                                        {% else %}
+                                                            <i class="far fa-star"></i>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <small class="text-muted">{{ avaliacao.criado_em|date:"d/m/Y" }}</small>
+                                        </div>
+                                        {% if avaliacao.comentario %}
+                                            <p class="mb-0">{{ avaliacao.comentario }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <div class="text-center py-4">
+                                    <i class="fas fa-star fa-3x text-muted mb-3"></i>
+                                    <h5>Nenhuma avaliação ainda</h5>
+                                    <p class="text-muted">Seja o primeiro a avaliar esta atração!</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <!-- Aba Horários -->
+                        <div class="tab-pane fade" id="horarios" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold mb-3">Horário de Funcionamento</h6>
+                                    <div class="timeline-item">
+                                        <strong>Segunda a Sexta</strong>
+                                        <br>
+                                        <small class="text-muted">{{ atracao.horario_abertura }} às {{ atracao.horario_fechamento }}</small>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <strong>Sábados e Domingos</strong>
+                                        <br>
+                                        <small class="text-muted">{{ atracao.horario_abertura }} às {{ atracao.horario_fechamento }}</small>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <strong>Feriados</strong>
+                                        <br>
+                                        <small class="text-muted">Horário especial - consulte o parque</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h6 class="fw-bold mb-3">Histórico de Tempo de Espera</h6>
+                                    {% if historico_espera %}
+                                        <canvas id="waitTimeChart" width="400" height="200"></canvas>
+                                    {% else %}
+                                        <p class="text-muted">Dados de tempo de espera não disponíveis.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Tempo de Espera Atual -->
+            <div class="wait-time-card mb-4">
+                <h5 class="fw-bold mb-2">
+                    <i class="fas fa-clock"></i> Tempo de Espera
+                </h5>
+                <div class="display-6 fw-bold">
+                    {% if atracao.tempo_espera == 0 %}
+                        <i class="fas fa-check-circle"></i> Sem fila!
+                    {% else %}
+                        {{ atracao.tempo_espera }} min
+                    {% endif %}
+                </div>
+                <small>Atualizado agora</small>
+                
+                {% if atracao.fast_pass_disponivel %}
+                    <div class="mt-3 pt-3 border-top border-white">
+                        <h6 class="fw-bold">
+                            <i class="fas fa-bolt"></i> Fast Pass Disponível
+                        </h6>
+                        <p class="mb-0 small">Pule a fila com o Fast Pass!</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Informações Rápidas -->
+            <div class="info-card">
+                <h5 class="fw-bold mb-4 text-center">
+                    <i class="fas fa-info-circle"></i> Informações Rápidas
+                </h5>
+                
+                <div class="info-item">
+                    <i class="fas fa-clock fa-2x mb-2"></i>
+                    <h6 class="fw-bold">Duração</h6>
+                    <p class="mb-0">{{ atracao.duracao }} minutos</p>
+                </div>
+                
+                <div class="info-item">
+                    <i class="fas fa-fire fa-2x mb-2"></i>
+                    <h6 class="fw-bold">Nível de Emoção</h6>
+                    <p class="mb-0">{{ atracao.get_nivel_emocao_texto }}</p>
+                </div>
+                
+                <div class="info-item">
+                    <i class="fas fa-users fa-2x mb-2"></i>
+                    <h6 class="fw-bold">Capacidade</h6>
+                    <p class="mb-0">{{ atracao.capacidade }} pessoas</p>
+                </div>
+                
+                {% if atracao.altura_minima %}
+                    <div class="info-item">
+                        <i class="fas fa-ruler fa-2x mb-2"></i>
+                        <h6 class="fw-bold">Altura Mínima</h6>
+                        <p class="mb-0">{{ atracao.altura_minima }}cm</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Atrações Similares -->
+            {% if atracoes_similares %}
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3">
+                            <i class="fas fa-heart"></i> Você Também Pode Gostar
+                        </h5>
+                        
+                        {% for similar in atracoes_similares %}
+                            <div class="similar-attraction mb-3" 
+                                 style="background-image: url('{{ similar.imagem_principal }}'); background-size: cover; background-position: center;"
+                                 onclick="window.location.href='{% url 'atracoes:detalhe' similar.id %}'">
+                                <div class="similar-content">
+                                    <h6 class="fw-bold mb-1">{{ similar.nome }}</h6>
+                                    <small>
+                                        {{ similar.area.nome }} • {{ similar.categoria.nome }}
+                                        {% if similar.avaliacao > 0 %}
+                                            • ⭐ {{ similar.avaliacao|floatformat:1 }}
+                                        {% endif %}
+                                    </small>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            
+            <!-- Call to Action -->
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h5 class="fw-bold mb-3">Planeje sua Visita</h5>
+                    <p class="text-muted mb-4">Encontre esta atração no mapa e crie seu roteiro personalizado.</p>
+                    <a href="{% url 'atracoes:mapa' %}" class="btn btn-primary w-100 mb-2">
+                        <i class="fas fa-map"></i> Ver no Mapa
+                    </a>
+                    <a href="{% url 'atracoes:lista' %}" class="btn btn-outline-primary w-100">
+                        <i class="fas fa-list"></i> Todas as Atrações
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Botão de Favorito Flutuante -->
+{% if user.is_authenticated %}
+    <button class="favorite-btn" onclick="toggleFavorite({{ atracao.id }}, this)" 
+            title="{% if eh_favorito %}Remover dos{% else %}Adicionar aos{% endif %} favoritos">
+        <i class="fas fa-heart{% if not eh_favorito %}-broken{% endif %}"></i>
+    </button>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+.rating-input {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.rating-input input[type="radio"] {
+    display: none;
+}
+
+.star-label {
+    color: #ddd;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.rating-input input[type="radio"]:checked ~ .star-label,
+.rating-input .star-label:hover,
+.rating-input .star-label:hover ~ .star-label {
+    color: #ffd700;
+}
+</style>
+
+<script>
+function changeMainImage(src) {
+    document.getElementById('mainImage').src = src;
+    
+    // Atualizar thumbs ativos
+    document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+        thumb.classList.remove('active');
+    });
+    
+    event.target.classList.add('active');
+}
+
+function toggleFavorite(atracaoId, button) {
+    fetch(`/atracoes/${atracaoId}/favoritar/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const icon = button.querySelector('i');
+        if (data.favoritado) {
+            icon.classList.remove('fa-heart-broken');
+            icon.classList.add('fa-heart');
+            button.title = 'Remover dos favoritos';
+        } else {
+            icon.classList.remove('fa-heart');
+            icon.classList.add('fa-heart-broken');
+            button.title = 'Adicionar aos favoritos';
+        }
+        
+        // Animação
+        button.style.transform = 'scale(1.2)';
+        setTimeout(() => {
+            button.style.transform = 'scale(1)';
+        }, 200);
+        
+        // Toast notification
+        showToast(data.mensagem);
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        showToast('Erro ao atualizar favorito', 'error');
+    });
+}
+
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `alert alert-${type === 'error' ? 'danger' : 'success'} position-fixed`;
+    toast.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    toast.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close float-end" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        if (document.body.contains(toast)) {
+            document.body.removeChild(toast);
+        }
+    }, 5000);
+}
+
+// Gráfico de tempo de espera
+document.addEventListener('DOMContentLoaded', function() {
+    const chartCanvas = document.getElementById('waitTimeChart');
+    if (chartCanvas) {
+        const ctx = chartCanvas.getContext('2d');
+        
+        // Dados de exemplo (você pode substituir pelos dados reais do Django)
+        const data = {
+            labels: ['9h', '10h', '11h', '12h', '13h', '14h', '15h', '16h', '17h', '18h', '19h', '20h'],
+            datasets: [{
+                label: 'Tempo de Espera (min)',
+                data: [10, 15, 25, 35, 30, 45, 40, 35, 25, 20, 15, 10],
+                borderColor: '#ff6b6b',
+                backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        };
+        
+        new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Minutos'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Horário'
+                        }
+                    }
+                }
+            }
+        });
+    }
+});
+
+// Animação das barras de emoção
+window.addEventListener('load', function() {
+    const thrillBars = document.querySelectorAll('.thrill-bar.active');
+    thrillBars.forEach((bar, index) => {
+        setTimeout(() => {
+            bar.style.transform = 'scaleY(1.5)';
+            setTimeout(() => {
+                bar.style.transform = 'scaleY(1)';
+            }, 300);
+        }, index * 100);
+    });
+});
+</script>
+{% endblock %}
