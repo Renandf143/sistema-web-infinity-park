@@ -1,50 +1,58 @@
+
+import express from 'express';
 import { spawn } from 'child_process';
 import path from 'path';
 
-const PORT = 5000;
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Diretório do projeto Django
-const DJANGO_DIR = path.join(process.cwd(), 'InfinityPark', 'WebMola', 'InfinityPark', 'DjangoHelloWorld');
+// Middleware para servir arquivos estáticos
+app.use(express.static('public'));
 
-let djangoProcess: any = null;
-
-// Função para iniciar o Django diretamente na porta 5000
+// Função para iniciar o Django
 function startDjango() {
   console.log('🎢 Iniciando servidor Django do Infinity Park...');
   
-  djangoProcess = spawn('python', ['manage.py', 'runserver', `0.0.0.0:${PORT}`], {
-    cwd: DJANGO_DIR,
-    stdio: 'inherit'
+  const djangoPath = path.join(__dirname, '../InfinityPark/WebMola/InfinityPark/DjangoHelloWorld');
+  
+  // Primeiro, configurar o sistema
+  const configProcess = spawn('python', ['configurar_infinity_park.py'], {
+    cwd: djangoPath,
+    stdio: 'inherit',
+    shell: true
   });
-
-  djangoProcess.on('error', (err: any) => {
-    console.error('Erro ao iniciar Django:', err);
-  });
-
-  djangoProcess.on('close', (code: any) => {
-    console.log(`Django finalizado com código: ${code}`);
+  
+  configProcess.on('close', (code) => {
+    if (code === 0) {
+      console.log('✅ Sistema configurado com sucesso!');
+      
+      // Agora iniciar o servidor Django
+      const djangoProcess = spawn('python', ['manage.py', 'runserver', '0.0.0.0:5000'], {
+        cwd: djangoPath,
+        stdio: 'inherit',
+        shell: true
+      });
+      
+      djangoProcess.on('error', (error) => {
+        console.error('❌ Erro ao iniciar Django:', error);
+      });
+      
+      console.log('🚀 Infinity Park Django rodando na porta 5000');
+      console.log('🌐 Acesse: http://localhost:5000');
+    } else {
+      console.error('❌ Erro na configuração do sistema');
+    }
   });
 }
 
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('Finalizando servidor...');
-  if (djangoProcess) {
-    djangoProcess.kill();
-  }
-  process.exit(0);
-});
-
-process.on('SIGINT', () => {
-  console.log('Finalizando servidor...');
-  if (djangoProcess) {
-    djangoProcess.kill();
-  }
-  process.exit(0);
-});
-
-// Iniciar Django
+// Iniciar Django automaticamente
 startDjango();
 
-console.log(`🚀 Infinity Park Django rodando na porta ${PORT}`);
-console.log(`🌐 Acesse: http://localhost:${PORT}`);
+// Rota de fallback para redirecionar para o Django
+app.get('*', (req, res) => {
+  res.redirect('http://localhost:5000');
+});
+
+app.listen(PORT, () => {
+  console.log(`🌐 Servidor proxy rodando na porta ${PORT}`);
+});
