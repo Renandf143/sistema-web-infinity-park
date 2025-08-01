@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}Termos de Uso - Infinity Park{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Termos de Uso</li>
+        </ol>
+    </nav>
+    
+    <div class="row">
+        <div class="col-12 text-center mb-4">
+            <h1 class="display-4 fw-bold">
+                <i class="fas fa-gavel text-primary"></i>
+                Termos de Uso
+            </h1>
+            <p class="lead">Leia atentamente os termos e condições para utilização do Infinity Park</p>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <div class="mb-5">
+                        <h3 class="mb-3">1. Aceitação dos Termos</h3>
+                        <p>Ao acessar e utilizar o site e os serviços do Infinity Park, você concorda com os termos e condições aqui estabelecidos. Se você não concordar com qualquer parte destes termos, por favor, não utilize nosso site ou serviços.</p>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">2. Uso do Site</h3>
+                        <p>O site do Infinity Park é destinado a fornecer informações sobre o parque, suas atrações, ingressos e serviços relacionados. Você concorda em utilizar o site apenas para fins legais e de acordo com estes termos.</p>
+                        <p>Você não deve:</p>
+                        <ul>
+                            <li>Violar quaisquer leis aplicáveis ou regulamentos</li>
+                            <li>Utilizar o site de maneira que possa danificar, desabilitar, sobrecarregar ou comprometer nossos servidores</li>
+                            <li>Tentar acessar áreas restritas do site sem autorização</li>
+                            <li>Utilizar qualquer dispositivo, software ou rotina para interferir no funcionamento adequado do site</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">3. Compra de Ingressos</h3>
+                        <p>Ao adquirir ingressos através do nosso site, você concorda com as seguintes condições:</p>
+                        <ul>
+                            <li>Os ingressos são válidos apenas para a data especificada no momento da compra</li>
+                            <li>Os ingressos não são transferíveis e não podem ser revendidos</li>
+                            <li>É necessário apresentar documento de identificação com foto no momento da entrada no parque</li>
+                            <li>O Infinity Park reserva-se o direito de recusar a entrada de pessoas que não cumpram com as regras do parque</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">4. Política de Cancelamento e Reembolso</h3>
+                        <p>Cancelamentos podem ser realizados com até 7 dias de antecedência da data da visita, com reembolso de 80% do valor pago. Após esse período, não haverá reembolso.</p>
+                        <p>A alteração da data de visita pode ser realizada com até 48 horas de antecedência, sujeita à disponibilidade e mediante taxa administrativa de R$ 10,00 por ingresso.</p>
+                        <p>Em caso de fechamento do parque por motivos de força maior (condições climáticas extremas, manutenção emergencial, etc.), os ingressos poderão ser remarcados para outra data sem custo adicional, dentro do prazo de 90 dias.</p>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">5. Regras do Parque</h3>
+                        <p>Durante sua visita ao Infinity Park, você concorda em:</p>
+                        <ul>
+                            <li>Seguir todas as instruções de segurança fornecidas pelos funcionários do parque</li>
+                            <li>Respeitar as restrições de altura, idade e condições físicas para cada atração</li>
+                            <li>Não portar objetos perigosos, bebidas alcoólicas ou substâncias ilícitas</li>
+                            <li>Não fumar, exceto nas áreas designadas para fumantes</li>
+                            <li>Supervisionar adequadamente crianças e menores sob sua responsabilidade</li>
+                            <li>Não alimentar os animais nas áreas de zoológico e aquário</li>
+                            <li>Não danificar ou remover qualquer propriedade do parque</li>
+                        </ul>
+                        <p>O não cumprimento destas regras pode resultar na retirada do visitante sem direito a reembolso.</p>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">6. Responsabilidade</h3>
+                        <p>O Infinity Park não se responsabiliza por:</p>
+                        <ul>
+                            <li>Objetos perdidos ou danificados durante a visita</li>
+                            <li>Acidentes decorrentes do descumprimento das normas de segurança</li>
+                            <li>Condições climáticas que possam afetar o funcionamento de atrações ao ar livre</li>
+                            <li>Problemas de saúde resultantes de condições pré-existentes não informadas</li>
+                        </ul>
+                        <p>Recomendamos que todos os visitantes contratem seguro de viagem e acidentes pessoais.</p>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">7. Propriedade Intelectual</h3>
+                        <p>Todo o conteúdo do site do Infinity Park, incluindo textos, gráficos, logos, ícones, imagens, clipes de áudio, downloads digitais e compilações de dados, é propriedade do Infinity Park ou de seus fornecedores de conteúdo e está protegido pelas leis de direitos autorais.</p>
+                        <p>Você não pode reproduzir, distribuir, exibir, vender, alugar, transmitir ou criar trabalhos derivados do conteúdo do site sem autorização prévia por escrito do Infinity Park.</p>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">8. Privacidade</h3>
+                        <p>Nossa Política de Privacidade, disponível em <a href="{% url 'politica_privacidade' %}">Política de Privacidade</a>, descreve como coletamos, usamos e protegemos suas informações pessoais. Ao utilizar nosso site e serviços, você concorda com nossa Política de Privacidade.</p>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">9. Alterações nos Termos</h3>
+                        <p>O Infinity Park reserva-se o direito de modificar estes termos a qualquer momento. As alterações entrarão em vigor imediatamente após sua publicação no site. É sua responsabilidade verificar periodicamente se houve alterações. O uso contínuo do site após a publicação de alterações constitui aceitação dessas alterações.</p>
+                    </div>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">10. Lei Aplicável</h3>
+                        <p>Estes termos são regidos e interpretados de acordo com as leis do Brasil. Qualquer disputa relacionada a estes termos será submetida à jurisdição exclusiva dos tribunais brasileiros.</p>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <h5><i class="fas fa-info-circle me-2"></i> Contato</h5>
+                        <p class="mb-0">Se você tiver dúvidas sobre estes Termos de Uso, entre em contato conosco pelo e-mail <a href="mailto:contato@infinitypark.com.br">contato@infinitypark.com.br</a> ou pelo telefone (11) 5555-1234.</p>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <p class="text-muted">Última atualização: 01 de agosto de 2025</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

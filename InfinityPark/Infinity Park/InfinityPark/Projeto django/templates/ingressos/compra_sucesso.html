@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Compra Realizada com Sucesso - Infinity Park{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-success">
+                <div class="card-body text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success fa-5x"></i>
+                    </div>
+                    <h1 class="display-4 fw-bold text-success mb-3">Compra Realizada com Sucesso!</h1>
+                    <p class="lead mb-4">Seus ingressos foram confirmados e enviados para o seu email.</p>
+                    
+                    <div class="alert alert-info mb-4">
+                        <h5><i class="fas fa-info-circle me-2"></i> Informações Importantes</h5>
+                        <p class="mb-0">Você receberá um email com seus ingressos em formato PDF. Você pode imprimi-los ou apresentá-los diretamente do seu celular na entrada do parque.</p>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-ticket-alt text-primary me-2"></i> Seus Ingressos</h5>
+                                    <p class="card-text">Acesse seus ingressos a qualquer momento na sua área de cliente.</p>
+                                    <a href="{% url 'ingressos:meus_ingressos' %}" class="btn btn-primary">
+                                        <i class="fas fa-ticket-alt me-2"></i> Meus Ingressos
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-map-marked-alt text-primary me-2"></i> Mapa do Parque</h5>
+                                    <p class="card-text">Planeje sua visita com antecedência consultando o mapa do parque.</p>
+                                    <a href="{% url 'paginas:mapa' %}" class="btn btn-primary">
+                                        <i class="fas fa-map me-2"></i> Ver Mapa
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h4 class="mb-3">Detalhes da Compra</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="table-light">Número do Pedido</th>
+                                        <td>{{ pedido.numero }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-light">Data da Compra</th>
+                                        <td>{{ pedido.data_criacao|date:"d/m/Y H:i" }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-light">Data da Visita</th>
+                                        <td>{{ pedido.data_visita|date:"d/m/Y" }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-light">Valor Total</th>
+                                        <td>R$ {{ pedido.valor_total }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-light">Método de Pagamento</th>
+                                        <td>{{ pedido.get_metodo_pagamento_display }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="table-light">Status</th>
+                                        <td><span class="badge bg-success">{{ pedido.get_status_display }}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{% url 'paginas:home' %}" class="btn btn-outline-primary btn-lg me-md-2">
+                            <i class="fas fa-home me-2"></i> Voltar para Home
+                        </a>
+                        <a href="{% url 'atracoes:lista' %}" class="btn btn-success btn-lg">
+                            <i class="fas fa-rocket me-2"></i> Explorar Atrações
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

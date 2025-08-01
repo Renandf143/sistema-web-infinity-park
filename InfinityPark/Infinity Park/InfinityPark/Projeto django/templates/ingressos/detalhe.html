@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ tipo_ingresso.nome }} - Infinity Park{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'paginas:home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'ingressos:lista' %}">Ingressos</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ tipo_ingresso.nome }}</li>
+        </ol>
+    </nav>
+    
+    <div class="row">
+        <!-- Detalhes do Ingresso -->
+        <div class="col-md-8">
+            <div class="card shadow mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">{{ tipo_ingresso.nome }}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h5 class="text-primary">Descrição</h5>
+                        <p>{{ tipo_ingresso.descricao }}</p>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5 class="text-primary">Detalhes</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>Duração</span>
+                                    <span class="badge bg-primary rounded-pill">{{ tipo_ingresso.duracao_dias }} dias</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>Tipo de Acesso</span>
+                                    <span class="badge bg-info rounded-pill">{{ tipo_ingresso.get_tipo_acesso_display }}</span>
+                                </li>
+                                {% if tipo_ingresso.restricao_idade %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>Idade Mínima</span>
+                                    <span class="badge bg-warning rounded-pill">{{ tipo_ingresso.restricao_idade }} anos</span>
+                                </li>
+                                {% endif %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>Disponibilidade</span>
+                                    <span class="badge bg-success rounded-pill">Disponível</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <h5 class="text-primary">Benefícios</h5>
+                            <ul class="list-group list-group-flush">
+                                {% if tipo_ingresso.inclui_estacionamento %}
+                                <li class="list-group-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i> Estacionamento Incluso
+                                </li>
+                                {% endif %}
+                                {% if tipo_ingresso.acesso_vip %}
+                                <li class="list-group-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i> Acesso VIP às atrações
+                                </li>
+                                {% endif %}
+                                {% if tipo_ingresso.inclui_shows %}
+                                <li class="list-group-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i> Acesso a todos os shows
+                                </li>
+                                {% endif %}
+                                {% if tipo_ingresso.inclui_alimentacao %}
+                                <li class="list-group-item">
+                                    <i class="fas fa-check-circle text-success me-2"></i> Alimentação inclusa
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Termos e Condições -->
+                    <div class="mb-4">
+                        <h5 class="text-primary">Termos e Condições</h5>
+                        <ul>
+                            <li>Ingresso nominal e intransferível</li>
+                            <li>Necessário apresentar documento com foto na entrada</li>
+                            <li>Válido apenas para as datas selecionadas</li>
+                            <li>Não é permitido reembolso após a compra</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Formulário de Compra -->
+        <div class="col-md-4">
+            <div class="card shadow sticky-top" style="top: 20px;">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">Comprar Ingresso</h4>
+                </div>
+                <div class="card-body">
+                    <form id="form-compra" method="post" action="{% url 'ingressos:adicionar_carrinho' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="tipo_id" value="{{ tipo_ingresso.id }}">
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Preço</label>
+                            <h3 class="text-primary">R$ {{ tipo_ingresso.preco }}</h3>
+                            {% if promocoes_aplicaveis %}
+                            <div class="alert alert-danger">
+                                <i class="fas fa-tag"></i> Promoções disponíveis!
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="quantidade" class="form-label">Quantidade</label>
+                            <input type="number" class="form-control" id="quantidade" name="quantidade" value="1" min="1" max="10">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="data_visita" class="form-label">Data da Visita</label>
+                            <input type="date" class="form-control" id="data_visita" name="data_visita" required>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
+                            </button>
+                            <a href="{% url 'ingressos:lista' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left"></i> Voltar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+                
+                {% if promocoes_aplicaveis %}
+                <div class="card-footer bg-light">
+                    <h5 class="mb-3"><i class="fas fa-percentage text-danger"></i> Promoções Disponíveis</h5>
+                    <ul class="list-group list-group-flush">
+                        {% for promocao in promocoes_aplicaveis %}
+                        <li class="list-group-item">
+                            <h6>{{ promocao.nome }}</h6>
+                            <p class="mb-1">{{ promocao.descricao }}</p>
+                            <p class="mb-0"><strong>Desconto:</strong> {{ promocao.desconto }}%</p>
+                            <small>Válido até: {{ promocao.data_fim|date:"d/m/Y" }}</small>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Definir data mínima como hoje
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+        
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        
+        const formattedToday = yyyy + '-' + mm + '-' + dd;
+        document.getElementById('data_visita').setAttribute('min', formattedToday);
+        document.getElementById('data_visita').value = formattedToday;
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,1190 @@
+INFO 2025-07-06 18:14:42,589 autoreload 4980 140522369336832 Watching for file changes with StatReloader
+ERROR 2025-07-06 18:14:42,850 log 4980 140522310211264 Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/atracoes/views.py", line 32, in home
+    return render(request, 'atracoes/home.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'api_buscar' not found. 'api_buscar' is not a valid view function or pattern name.
+ERROR 2025-07-06 18:14:42,853 basehttp 4980 140522310211264 "GET / HTTP/1.1" 500 188073
+ERROR 2025-07-06 18:14:55,495 log 4980 140522310211264 Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/atracoes/views.py", line 32, in home
+    return render(request, 'atracoes/home.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'api_buscar' not found. 'api_buscar' is not a valid view function or pattern name.
+ERROR 2025-07-06 18:14:55,497 basehttp 4980 140522310211264 "GET / HTTP/1.1" 500 184770
+INFO 2025-07-06 18:15:42,925 basehttp 4980 140522310211264 "GET / HTTP/1.1" 200 64497
+INFO 2025-07-06 18:15:52,434 autoreload 5335 140273958389248 Watching for file changes with StatReloader
+INFO 2025-07-06 18:16:27,903 autoreload 5618 140662326838784 Watching for file changes with StatReloader
+INFO 2025-07-06 18:16:41,055 basehttp 5618 140662192207552 "HEAD / HTTP/1.1" 200 0
+INFO 2025-07-06 18:16:52,569 autoreload 5710 140314233091584 Watching for file changes with StatReloader
+INFO 2025-07-06 18:17:13,695 autoreload 5849 140182403569152 Watching for file changes with StatReloader
+INFO 2025-07-06 18:17:23,970 autoreload 5951 139777136838144 Watching for file changes with StatReloader
+INFO 2025-07-06 18:17:56,454 autoreload 6119 140212021065216 Watching for file changes with StatReloader
+INFO 2025-07-06 18:18:11,486 basehttp 6119 140211891730112 "HEAD / HTTP/1.1" 200 0
+INFO 2025-07-06 18:18:21,806 autoreload 6220 140359092483584 Watching for file changes with StatReloader
+INFO 2025-07-06 18:19:00,338 autoreload 6350 140698244130304 Watching for file changes with StatReloader
+INFO 2025-07-06 18:19:00,980 basehttp 6350 140698185004736 "GET / HTTP/1.1" 200 64497
+INFO 2025-07-06 18:19:10,210 basehttp 6350 140698175563456 "GET / HTTP/1.1" 200 64497
+INFO 2025-07-06 18:20:09,328 basehttp 6350 140698185004736 "GET / HTTP/1.1" 200 64497
+INFO 2025-07-06 18:20:11,287 basehttp 6350 140698185004736 "GET /favicon.ico HTTP/1.1" 301 0
+WARNING 2025-07-06 18:20:11,478 basehttp 6350 140698185004736 "GET /static/favicon.ico HTTP/1.1" 404 2017
+INFO 2025-07-06 18:20:15,891 basehttp 6350 140698185004736 "GET / HTTP/1.1" 200 64497
+INFO 2025-07-06 18:20:16,944 basehttp 6350 140698185004736 "GET /lista/ HTTP/1.1" 200 126197
+INFO 2025-07-06 18:20:19,889 basehttp 6350 140698185004736 "GET /8/ HTTP/1.1" 200 45759
+INFO 2025-07-06 18:20:26,391 basehttp 6350 140698185004736 "GET /mapa/ HTTP/1.1" 200 47287
+INFO 2025-07-06 18:21:32,824 basehttp 6350 140698185004736 "GET /mapa/ HTTP/1.1" 200 47287
+INFO 2025-07-06 18:21:57,847 basehttp 6350 140698185004736 "GET /lista/ HTTP/1.1" 200 126197
+INFO 2025-07-06 18:22:00,752 basehttp 6350 140698185004736 "GET /1/ HTTP/1.1" 200 49486
+INFO 2025-07-06 18:24:52,964 basehttp 6350 140698175563456 "GET /2/ HTTP/1.1" 200 48344
+INFO 2025-07-06 18:25:00,595 basehttp 6350 140698175563456 "GET /lista/ HTTP/1.1" 200 126197
+INFO 2025-07-06 18:25:00,636 basehttp 6350 140698175563456 "GET /lista/ HTTP/1.1" 200 126197
+INFO 2025-07-06 18:25:42,941 basehttp 6350 140698175563456 "GET /lista/ HTTP/1.1" 200 126197
+INFO 2025-07-06 18:25:43,562 basehttp 6350 140698175563456 "GET /mapa/ HTTP/1.1" 200 47287
+INFO 2025-07-06 18:25:45,364 basehttp 6350 140698175563456 "GET /mapa/ HTTP/1.1" 200 47287
+INFO 2025-07-06 18:25:46,774 basehttp 6350 140698175563456 "GET /lista/ HTTP/1.1" 200 126197
+INFO 2025-07-06 18:25:53,089 basehttp 6350 140698175563456 "GET /8/ HTTP/1.1" 200 45759
+INFO 2025-07-06 18:29:13,080 basehttp 6350 140698175563456 "GET /mapa/ HTTP/1.1" 200 47287
+INFO 2025-07-06 18:33:24,340 basehttp 6350 140698175563456 "GET /mapa/ HTTP/1.1" 200 47287
+INFO 2025-07-06 18:36:08,675 autoreload 6350 140698244130304 /home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/eventos/views.py changed, reloading.
+INFO 2025-07-06 18:36:09,183 autoreload 6877 140134170449408 Watching for file changes with StatReloader
+INFO 2025-07-06 18:36:37,385 autoreload 6877 140134170449408 /home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/eventos/urls.py changed, reloading.
+INFO 2025-07-06 18:36:37,840 autoreload 7048 140559955666432 Watching for file changes with StatReloader
+INFO 2025-07-06 18:36:38,363 basehttp 7048 140559895492288 "GET / HTTP/1.1" 200 64622
+INFO 2025-07-06 18:37:31,296 autoreload 7048 140559955666432 /home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/usuarios/views.py changed, reloading.
+INFO 2025-07-06 18:37:31,819 autoreload 7096 140246957524480 Watching for file changes with StatReloader
+INFO 2025-07-06 18:37:40,844 autoreload 7191 139713702290944 Watching for file changes with StatReloader
+INFO 2025-07-06 18:37:51,042 autoreload 7245 139846922532352 Watching for file changes with StatReloader
+INFO 2025-07-06 18:38:17,898 autoreload 7326 139881572525568 Watching for file changes with StatReloader
+INFO 2025-07-06 18:38:27,703 autoreload 7380 139626834015744 Watching for file changes with StatReloader
+INFO 2025-07-06 18:39:28,184 autoreload 7461 140641563854336 Watching for file changes with StatReloader
+INFO 2025-07-06 18:39:28,699 basehttp 7461 140641503680192 "GET / HTTP/1.1" 200 64622
+INFO 2025-07-06 18:39:35,054 basehttp 7461 140641503680192 "GET / HTTP/1.1" 200 64622
+INFO 2025-07-06 18:39:41,761 basehttp 7461 140641503680192 "GET /mapa/ HTTP/1.1" 200 47412
+WARNING 2025-07-06 18:39:48,713 log 7461 140641503680192 Not Found: /atracoes/api/tempos-espera/
+WARNING 2025-07-06 18:39:48,714 basehttp 7461 140641503680192 "GET /atracoes/api/tempos-espera/ HTTP/1.1" 404 6086
+ERROR 2025-07-06 18:42:56,205 log 7461 140641503680192 Internal Server Error: /lista/
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/atracoes/views.py", line 92, in lista_atracoes
+    return render(request, 'atracoes/lista.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'sobre_nos' not found. 'sobre_nos' is not a valid view function or pattern name.
+ERROR 2025-07-06 18:42:56,209 basehttp 7461 140641503680192 "GET /lista/?area=2 HTTP/1.1" 500 195258
+ERROR 2025-07-06 18:43:00,963 log 7461 140641503680192 Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/atracoes/views.py", line 32, in home
+    return render(request, 'atracoes/home.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'sobre_nos' not found. 'sobre_nos' is not a valid view function or pattern name.
+ERROR 2025-07-06 18:43:00,965 basehttp 7461 140641503680192 "GET / HTTP/1.1" 500 189348
+INFO 2025-07-06 18:43:20,850 autoreload 7461 140641563854336 /home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/ingressos/views.py changed, reloading.
+INFO 2025-07-06 18:43:21,450 autoreload 7896 139625003193856 Watching for file changes with StatReloader
+INFO 2025-07-06 18:43:39,665 autoreload 7896 139625003193856 /home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/ingressos/urls.py changed, reloading.
+INFO 2025-07-06 18:43:40,160 autoreload 7930 139872025630208 Watching for file changes with StatReloader
+ERROR 2025-07-06 18:43:40,737 log 7930 139871965456064 Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/atracoes/views.py", line 32, in home
+    return render(request, 'atracoes/home.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/backends/django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 1016, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/base.py", line 977, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/base.py", line 98, in reverse
+    resolved_url = resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/urls/resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'sobre_nos' not found. 'sobre_nos' is not a valid view function or pattern name.
+ERROR 2025-07-06 18:43:40,741 basehttp 7930 139871965456064 "GET / HTTP/1.1" 500 189348
+INFO 2025-07-06 18:44:17,975 autoreload 8068 139682287085056 Watching for file changes with StatReloader
+INFO 2025-07-06 18:44:18,488 basehttp 8068 139682226910912 "GET / HTTP/1.1" 200 64853
+INFO 2025-07-06 18:44:36,221 autoreload 8068 139682287085056 /home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/settings.py changed, reloading.
+INFO 2025-07-06 18:44:36,700 autoreload 8132 140356059624960 Watching for file changes with StatReloader
+INFO 2025-07-06 18:44:37,447 basehttp 8132 140355999450816 "GET / HTTP/1.1" 200 64853
+INFO 2025-07-06 18:48:30,277 autoreload 8486 140441259177472 Watching for file changes with StatReloader
+INFO 2025-07-06 18:48:31,124 basehttp 8486 140441199003328 "GET / HTTP/1.1" 200 64853
+INFO 2025-07-06 18:48:40,803 basehttp 8486 140441189562048 "GET / HTTP/1.1" 200 64853
+INFO 2025-07-06 18:51:13,617 basehttp 8486 140441199003328 "GET / HTTP/1.1" 200 64853
+INFO 2025-07-06 18:52:49,565 basehttp 8486 140441199003328 "GET /usuarios/login/ HTTP/1.1" 200 19091
+INFO 2025-07-06 18:52:50,570 basehttp 8486 140441199003328 "GET /usuarios/cadastro/ HTTP/1.1" 200 22071
+INFO 2025-07-06 18:53:27,617 basehttp 8486 140441199003328 "GET /mapa/ HTTP/1.1" 200 47643
+ERROR 2025-07-06 18:53:29,473 log 8486 140441199003328 Internal Server Error: /ingressos/
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/ingressos/views.py", line 27, in lista_ingressos
+    return render(request, 'ingressos/lista.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: ingressos/lista.html
+ERROR 2025-07-06 18:53:29,475 basehttp 8486 140441199003328 "GET /ingressos/ HTTP/1.1" 500 116862
+INFO 2025-07-06 18:53:33,177 basehttp 8486 140441199003328 "GET /eventos/ HTTP/1.1" 200 63809
+ERROR 2025-07-06 18:53:37,019 log 8486 140441199003328 Internal Server Error: /eventos/1/
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/eventos/views.py", line 118, in detalhe_evento
+    return render(request, 'eventos/detalhe.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: eventos/detalhe.html
+ERROR 2025-07-06 18:53:37,020 basehttp 8486 140441199003328 "GET /eventos/1/ HTTP/1.1" 500 117161
+INFO 2025-07-06 21:30:40,362 autoreload 237 140224018265600 Watching for file changes with StatReloader
+INFO 2025-07-06 21:30:41,558 basehttp 237 140223958091456 "GET / HTTP/1.1" 200 64853
+INFO 2025-07-06 21:30:52,254 basehttp 237 140223958091456 "GET /12/ HTTP/1.1" 200 48656
+INFO 2025-07-06 21:31:00,509 basehttp 237 140223947601600 "GET /mapa/ HTTP/1.1" 200 47643
+INFO 2025-07-06 21:31:13,685 basehttp 237 140223947601600 "GET / HTTP/1.1" 200 64853
+INFO 2025-07-06 21:31:44,017 basehttp 237 140223947601600 "GET / HTTP/1.1" 200 64853
+WARNING 2025-07-06 21:31:45,888 basehttp 237 140223947601600 "GET /static/favicon.ico HTTP/1.1" 404 2017
+INFO 2025-07-06 21:31:46,050 basehttp 237 140223947601600 "GET /eventos/ HTTP/1.1" 200 63809
+ERROR 2025-07-06 21:31:49,458 log 237 140223947601600 Internal Server Error: /eventos/5/
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/eventos/views.py", line 118, in detalhe_evento
+    return render(request, 'eventos/detalhe.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: eventos/detalhe.html
+ERROR 2025-07-06 21:31:49,460 basehttp 237 140223947601600 "GET /eventos/5/ HTTP/1.1" 500 117559
+ERROR 2025-07-06 21:31:52,625 log 237 140223947601600 Internal Server Error: /ingressos/
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/ingressos/views.py", line 27, in lista_ingressos
+    return render(request, 'ingressos/lista.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: ingressos/lista.html
+ERROR 2025-07-06 21:31:52,627 basehttp 237 140223947601600 "GET /ingressos/ HTTP/1.1" 500 116865
+ERROR 2025-07-06 21:31:58,160 log 237 140223947601600 Internal Server Error: /eventos/4/
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/eventos/views.py", line 118, in detalhe_evento
+    return render(request, 'eventos/detalhe.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: eventos/detalhe.html
+ERROR 2025-07-06 21:31:58,161 basehttp 237 140223947601600 "GET /eventos/4/ HTTP/1.1" 500 117045
+INFO 2025-07-06 22:19:37,916 basehttp 237 140223947601600 "GET /lista/ HTTP/1.1" 200 126553
+INFO 2025-07-06 22:19:42,730 basehttp 237 140223947601600 "GET /8/ HTTP/1.1" 200 46115
+ERROR 2025-07-06 22:20:06,469 log 237 140223947601600 Internal Server Error: /politica-de-privacidade/
+Traceback (most recent call last):
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/InfinityPark/WebMola/InfinityPark/DjangoHelloWorld/paginas/views.py", line 25, in politica_privacidade
+    return render(request, 'paginas/politica_privacidade.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/workspace/.pythonlibs/lib/python3.11/site-packages/django/template/loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: paginas/politica_privacidade.html
+ERROR 2025-07-06 22:20:06,470 basehttp 237 140223947601600 "GET /politica-de-privacidade/ HTTP/1.1" 500 114854
+INFO 2025-07-06 22:20:09,443 basehttp 237 140223947601600 "GET /8/ HTTP/1.1" 200 46115
+INFO 2025-07-14 19:38:19,756 autoreload 253 140298636932608 Watching for file changes with StatReloader
+INFO 2025-07-14 19:38:20,982 basehttp 253 140298576758464 "GET / HTTP/1.1" 200 64853
+INFO 2025-07-14 19:38:26,265 basehttp 253 140298576758464 "GET /lista/ HTTP/1.1" 200 126553
+INFO 2025-07-14 19:42:32,300 basehttp 253 140298576758464 "GET /8/ HTTP/1.1" 200 46115
+INFO 2025-07-14 19:43:37,408 basehttp 253 140298576758464 "GET / HTTP/1.1" 200 64853
+INFO 2025-07-14 19:44:57,842 autoreload 622 140275682268672 Watching for file changes with StatReloader
+INFO 2025-07-14 19:44:58,504 basehttp 622 140275622094528 "GET / HTTP/1.1" 200 64853
+INFO 2025-07-14 19:44:58,654 basehttp 622 140275622094528 "GET / HTTP/1.1" 200 64853
+INFO 2025-08-01 03:12:35,471 autoreload 20144 18184 Watching for file changes with StatReloader
+INFO 2025-08-01 03:12:38,088 basehttp 20144 21612 "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-08-01 03:12:38,336 basehttp 20144 21612 "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4201
+INFO 2025-08-01 03:12:38,608 basehttp 20144 21612 "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-08-01 03:12:38,631 basehttp 20144 20400 "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-08-01 03:12:38,639 basehttp 20144 22936 "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-08-01 03:12:38,648 basehttp 20144 20400 "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-08-01 03:12:38,652 basehttp 20144 22936 "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-08-01 03:12:38,653 basehttp 20144 21612 "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2025-08-01 03:12:38,684 basehttp 20144 21612 "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-08-01 03:12:41,363 basehttp 20144 21612 "GET /favicon.ico HTTP/1.1" 301 0
+WARNING 2025-08-01 03:12:41,503 basehttp 20144 21612 "GET /static/favicon.ico HTTP/1.1" 404 1960
+INFO 2025-08-01 03:12:46,720 autoreload 22628 9152 Watching for file changes with StatReloader
+INFO 2025-08-01 03:12:48,224 basehttp 20144 22936 "GET / HTTP/1.1" 200 64858
+INFO 2025-08-01 03:12:52,998 basehttp 20144 22936 "GET /16/ HTTP/1.1" 200 49998
+INFO 2025-08-01 03:12:54,367 basehttp 20144 22936 "GET /lista/ HTTP/1.1" 200 126577
+INFO 2025-08-01 03:12:55,390 basehttp 20144 22936 "GET /eventos/ HTTP/1.1" 200 63809
+ERROR 2025-08-01 03:12:57,186 log 20144 22936 Internal Server Error: /ingressos/
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\ingressos\views.py", line 27, in lista_ingressos
+    return render(request, 'ingressos/lista.html', context)
+  File "C:\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: ingressos/lista.html
+ERROR 2025-08-01 03:12:57,213 basehttp 20144 22936 "GET /ingressos/ HTTP/1.1" 500 88827
+INFO 2025-08-01 03:13:04,682 basehttp 20144 14956 "GET /?ide_webview_request_time=1754028784350 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:13:05,482 log 20144 14956 Not Found: /@vite/client
+WARNING 2025-08-01 03:13:05,484 basehttp 20144 14956 "GET /@vite/client HTTP/1.1" 404 6686
+ERROR 2025-08-01 03:13:29,982 log 20144 22936 Internal Server Error: /ingressos/
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\ingressos\views.py", line 27, in lista_ingressos
+    return render(request, 'ingressos/lista.html', context)
+  File "C:\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: ingressos/lista.html
+ERROR 2025-08-01 03:13:30,000 basehttp 20144 22936 "GET /ingressos/ HTTP/1.1" 500 88827
+INFO 2025-08-01 03:13:49,891 basehttp 20144 14956 "GET /13/ HTTP/1.1" 200 49844
+WARNING 2025-08-01 03:13:50,010 log 20144 14956 Not Found: /@vite/client
+WARNING 2025-08-01 03:13:50,015 basehttp 20144 14956 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:14:02,625 basehttp 20144 14956 "GET /22/ HTTP/1.1" 200 46367
+WARNING 2025-08-01 03:14:02,824 log 20144 14956 Not Found: /@vite/client
+WARNING 2025-08-01 03:14:02,825 basehttp 20144 14956 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:14:08,157 basehttp 20144 14956 "GET /mapa/ HTTP/1.1" 200 47662
+WARNING 2025-08-01 03:14:08,505 log 20144 14956 Not Found: /@vite/client
+WARNING 2025-08-01 03:14:08,505 basehttp 20144 14956 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:14:45,875 basehttp 20144 22936 "GET /ingressos/ HTTP/1.1" 200 30904
+INFO 2025-08-01 03:14:52,073 basehttp 20144 22936 "GET /mapa/ HTTP/1.1" 200 47662
+INFO 2025-08-01 03:14:53,606 basehttp 20144 22936 "GET /eventos/ HTTP/1.1" 200 63809
+INFO 2025-08-01 03:14:54,531 basehttp 20144 22936 "GET /lista/ HTTP/1.1" 200 126577
+INFO 2025-08-01 03:14:55,969 basehttp 20144 22936 "GET / HTTP/1.1" 200 64858
+INFO 2025-08-01 03:14:57,939 basehttp 20144 22936 "GET /ingressos/ HTTP/1.1" 200 30904
+INFO 2025-08-01 03:15:00,099 basehttp 20144 22936 "GET /usuarios/login/ HTTP/1.1" 200 19091
+INFO 2025-08-01 03:15:01,676 basehttp 20144 22936 "GET /usuarios/cadastro/ HTTP/1.1" 200 22071
+INFO 2025-08-01 03:15:03,226 basehttp 20144 22936 "GET /usuarios/login/ HTTP/1.1" 200 19091
+INFO 2025-08-01 03:15:05,419 basehttp 20144 22936 "GET /usuarios/cadastro/ HTTP/1.1" 200 22071
+ERROR 2025-08-01 03:15:08,209 log 20144 22936 Internal Server Error: /termos-de-uso/
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\paginas\views.py", line 17, in termos_uso
+    return render(request, 'paginas/termos_uso.html', context)
+  File "C:\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: paginas/termos_uso.html
+ERROR 2025-08-01 03:15:08,220 basehttp 20144 22936 "GET /termos-de-uso/ HTTP/1.1" 500 86373
+INFO 2025-08-01 03:15:26,449 basehttp 20144 22936 "GET /ingressos/ HTTP/1.1" 200 30904
+ERROR 2025-08-01 03:15:29,922 log 20144 22936 Internal Server Error: /ingressos/5/
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'paginas'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\ingressos\views.py", line 44, in detalhe_ingresso
+    return render(request, 'ingressos/detalhe.html', context)
+  File "C:\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'paginas' is not a registered namespace
+ERROR 2025-08-01 03:15:29,947 basehttp 20144 22936 "GET /ingressos/5/ HTTP/1.1" 500 165683
+ERROR 2025-08-01 03:15:47,173 log 20144 22936 Internal Server Error: /ingressos/5/
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'paginas'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\ingressos\views.py", line 44, in detalhe_ingresso
+    return render(request, 'ingressos/detalhe.html', context)
+  File "C:\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'paginas' is not a registered namespace
+ERROR 2025-08-01 03:15:47,208 basehttp 20144 22936 "GET /ingressos/5/ HTTP/1.1" 500 165820
+ERROR 2025-08-01 03:18:27,607 log 20144 22936 Internal Server Error: /ingressos/5/
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'paginas'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\ingressos\views.py", line 44, in detalhe_ingresso
+    return render(request, 'ingressos/detalhe.html', context)
+  File "C:\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'paginas' is not a registered namespace
+ERROR 2025-08-01 03:18:27,696 basehttp 20144 22936 "GET /ingressos/5/ HTTP/1.1" 500 165820
+ERROR 2025-08-01 03:18:38,901 log 20144 22936 Internal Server Error: /ingressos/5/
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'paginas'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\ingressos\views.py", line 44, in detalhe_ingresso
+    return render(request, 'ingressos/detalhe.html', context)
+  File "C:\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'paginas' is not a registered namespace
+ERROR 2025-08-01 03:18:39,014 basehttp 20144 22936 "GET /ingressos/5/ HTTP/1.1" 500 165820
+INFO 2025-08-01 03:18:50,487 autoreload 5528 17100 Watching for file changes with StatReloader
+INFO 2025-08-01 03:18:59,803 basehttp 20144 14956 "GET /mapa/ HTTP/1.1" 200 47662
+INFO 2025-08-01 03:18:59,946 basehttp 20144 14956 "GET /mapa/ HTTP/1.1" 200 47662
+WARNING 2025-08-01 03:19:00,587 log 20144 14956 Not Found: /@vite/client
+WARNING 2025-08-01 03:19:00,593 basehttp 20144 14956 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:19:28,939 basehttp 20144 14956 "GET / HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:19:29,787 log 20144 14956 Not Found: /@vite/client
+WARNING 2025-08-01 03:19:29,878 basehttp 20144 14956 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:19:46,660 basehttp 20144 22936 "GET / HTTP/1.1" 200 64858
+INFO 2025-08-01 03:19:51,489 basehttp 20144 22936 "GET /mapa/ HTTP/1.1" 200 47662
+INFO 2025-08-01 03:19:52,453 basehttp 20144 22936 "GET /ingressos/ HTTP/1.1" 200 30904
+ERROR 2025-08-01 03:19:55,483 log 20144 22936 Internal Server Error: /ingressos/5/
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'paginas'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\ingressos\views.py", line 44, in detalhe_ingresso
+    return render(request, 'ingressos/detalhe.html', context)
+  File "C:\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'paginas' is not a registered namespace
+ERROR 2025-08-01 03:19:55,530 basehttp 20144 22936 "GET /ingressos/5/ HTTP/1.1" 500 165683
+ERROR 2025-08-01 03:20:50,203 log 20144 13976 Internal Server Error: /termos-de-uso/
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'paginas'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\paginas\views.py", line 17, in termos_uso
+    return render(request, 'paginas/termos_uso.html', context)
+  File "C:\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'paginas' is not a registered namespace
+ERROR 2025-08-01 03:20:50,228 basehttp 20144 13976 "GET /termos-de-uso/?ide_webview_request_time=1754029249832 HTTP/1.1" 500 158021
+WARNING 2025-08-01 03:20:50,633 log 20144 13976 Not Found: /@vite/client
+WARNING 2025-08-01 03:20:50,638 basehttp 20144 13976 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:20:59,650 autoreload 20144 18184 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\models.py changed, reloading.
+INFO 2025-08-01 03:20:59,946 autoreload 5528 17100 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\models.py changed, reloading.
+INFO 2025-08-01 03:21:05,392 autoreload 16784 7596 Watching for file changes with StatReloader
+INFO 2025-08-01 03:21:06,183 autoreload 7076 16716 Watching for file changes with StatReloader
+INFO 2025-08-01 03:21:12,058 autoreload 16784 7596 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\models.py changed, reloading.
+INFO 2025-08-01 03:21:12,417 autoreload 7076 16716 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\models.py changed, reloading.
+INFO 2025-08-01 03:21:18,130 autoreload 17512 9380 Watching for file changes with StatReloader
+INFO 2025-08-01 03:21:19,271 autoreload 3208 16140 Watching for file changes with StatReloader
+ERROR 2025-08-01 03:21:23,815 log 17512 17456 Internal Server Error: /termos-de-uso/
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 81, in reverse
+    extra, resolver = resolver.namespace_dict[ns]
+                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^
+KeyError: 'paginas'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\paginas\views.py", line 17, in termos_uso
+    return render(request, 'paginas/termos_uso.html', context)
+  File "C:\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 1016, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\base.py", line 977, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Python313\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Python313\Lib\site-packages\django\urls\base.py", line 92, in reverse
+    raise NoReverseMatch("%s is not a registered namespace" % key)
+django.urls.exceptions.NoReverseMatch: 'paginas' is not a registered namespace
+ERROR 2025-08-01 03:21:23,863 basehttp 17512 17456 "GET /termos-de-uso/?ide_webview_request_time=1754029283320 HTTP/1.1" 500 157901
+WARNING 2025-08-01 03:21:24,039 log 17512 17456 Not Found: /@vite/client
+WARNING 2025-08-01 03:21:24,044 basehttp 17512 17456 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:21:31,167 autoreload 3208 16140 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\models.py changed, reloading.
+INFO 2025-08-01 03:21:31,292 autoreload 17512 9380 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\models.py changed, reloading.
+INFO 2025-08-01 03:21:37,891 autoreload 456 5720 Watching for file changes with StatReloader
+INFO 2025-08-01 03:21:37,924 autoreload 12628 13976 Watching for file changes with StatReloader
+INFO 2025-08-01 03:21:43,596 autoreload 456 5720 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:21:43,625 autoreload 12628 13976 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:21:47,044 autoreload 17032 18184 Watching for file changes with StatReloader
+INFO 2025-08-01 03:21:47,326 autoreload 20720 18308 Watching for file changes with StatReloader
+INFO 2025-08-01 03:21:50,683 basehttp 17032 22656 "GET /?ide_webview_request_time=1754029310273 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:21:50,924 log 17032 22656 Not Found: /@vite/client
+WARNING 2025-08-01 03:21:50,926 basehttp 17032 22656 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:22:05,662 autoreload 20720 18308 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:22:05,745 autoreload 17032 18184 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:22:09,233 autoreload 5720 10048 Watching for file changes with StatReloader
+INFO 2025-08-01 03:22:09,240 autoreload 15260 21120 Watching for file changes with StatReloader
+INFO 2025-08-01 03:22:24,220 autoreload 15260 21120 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:22:24,372 autoreload 5720 10048 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:22:28,164 autoreload 19076 20760 Watching for file changes with StatReloader
+INFO 2025-08-01 03:22:29,105 autoreload 21512 23140 Watching for file changes with StatReloader
+INFO 2025-08-01 03:22:31,077 basehttp 19076 1456 "GET /?ide_webview_request_time=1754029350700 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:22:31,182 log 19076 1456 Not Found: /@vite/client
+WARNING 2025-08-01 03:22:31,191 basehttp 19076 1456 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:22:43,209 autoreload 19076 20760 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:22:43,379 autoreload 21512 23140 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:22:47,548 autoreload 7736 17776 Watching for file changes with StatReloader
+INFO 2025-08-01 03:22:47,549 autoreload 2396 7076 Watching for file changes with StatReloader
+INFO 2025-08-01 03:22:51,076 basehttp 2396 20304 "GET /?ide_webview_request_time=1754029370703 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:22:51,197 log 2396 20304 Not Found: /@vite/client
+WARNING 2025-08-01 03:22:51,212 basehttp 2396 20304 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:23:01,261 autoreload 2396 7076 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:23:01,841 autoreload 7736 17776 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:23:04,121 autoreload 17388 10360 Watching for file changes with StatReloader
+INFO 2025-08-01 03:23:05,354 autoreload 13196 8600 Watching for file changes with StatReloader
+INFO 2025-08-01 03:23:05,884 basehttp 17388 17032 "GET /termos-de-uso/?ide_webview_request_time=1754029385517 HTTP/1.1" 200 25259
+WARNING 2025-08-01 03:23:06,053 log 17388 17032 Not Found: /@vite/client
+WARNING 2025-08-01 03:23:06,054 basehttp 17388 17032 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:23:08,962 basehttp 17388 17032 "GET /?ide_webview_request_time=1754029388929 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:23:09,088 log 17388 17032 Not Found: /@vite/client
+WARNING 2025-08-01 03:23:09,117 basehttp 17388 17032 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:23:20,916 autoreload 13196 8600 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:23:21,046 autoreload 17388 10360 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:23:23,708 autoreload 17536 18380 Watching for file changes with StatReloader
+INFO 2025-08-01 03:23:25,425 autoreload 18372 20640 Watching for file changes with StatReloader
+INFO 2025-08-01 03:23:26,790 basehttp 17536 20700 "GET /?ide_webview_request_time=1754029406395 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:23:26,953 log 17536 20700 Not Found: /@vite/client
+WARNING 2025-08-01 03:23:27,140 basehttp 17536 20700 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:23:39,668 autoreload 17536 18380 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:23:39,761 autoreload 18372 20640 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\atracoes\views.py changed, reloading.
+INFO 2025-08-01 03:23:43,577 autoreload 18704 23272 Watching for file changes with StatReloader
+INFO 2025-08-01 03:23:43,701 autoreload 2500 13300 Watching for file changes with StatReloader
+INFO 2025-08-01 03:23:46,656 basehttp 18704 23008 "GET /?ide_webview_request_time=1754029426204 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:23:46,765 log 18704 23008 Not Found: /@vite/client
+WARNING 2025-08-01 03:23:46,766 basehttp 18704 23008 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:23:48,588 basehttp 18704 23008 "GET /termos-de-uso/?ide_webview_request_time=1754029428581 HTTP/1.1" 200 25259
+WARNING 2025-08-01 03:23:48,659 log 18704 23008 Not Found: /@vite/client
+WARNING 2025-08-01 03:23:48,660 basehttp 18704 23008 "GET /@vite/client HTTP/1.1" 404 6686
+ERROR 2025-08-01 03:23:56,883 log 18704 23008 Internal Server Error: /politica-de-privacidade/
+Traceback (most recent call last):
+  File "C:\Python313\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Python313\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\paginas\views.py", line 25, in politica_privacidade
+    return render(request, 'paginas/politica_privacidade.html', context)
+  File "C:\Python313\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Python313\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: paginas/politica_privacidade.html
+ERROR 2025-08-01 03:23:56,896 basehttp 18704 23008 "GET /politica-de-privacidade/?ide_webview_request_time=1754029436804 HTTP/1.1" 500 85017
+WARNING 2025-08-01 03:23:57,058 log 18704 23008 Not Found: /@vite/client
+WARNING 2025-08-01 03:23:57,099 basehttp 18704 23008 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:23:57,460 autoreload 2500 13300 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\settings.py changed, reloading.
+INFO 2025-08-01 03:23:58,149 autoreload 18704 23272 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\settings.py changed, reloading.
+INFO 2025-08-01 03:23:58,912 autoreload 16852 21540 Watching for file changes with StatReloader
+INFO 2025-08-01 03:23:59,375 autoreload 20720 18372 Watching for file changes with StatReloader
+INFO 2025-08-01 03:24:03,047 basehttp 16852 21660 "GET /?ide_webview_request_time=1754029442644 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:24:03,153 log 16852 21660 Not Found: /@vite/client
+WARNING 2025-08-01 03:24:03,200 basehttp 16852 21660 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:24:06,318 autoreload 16852 21540 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\settings.py changed, reloading.
+INFO 2025-08-01 03:24:06,972 autoreload 20720 18372 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\settings.py changed, reloading.
+INFO 2025-08-01 03:24:08,777 autoreload 22348 17388 Watching for file changes with StatReloader
+INFO 2025-08-01 03:24:08,792 autoreload 16788 21920 Watching for file changes with StatReloader
+INFO 2025-08-01 03:24:12,389 basehttp 22348 20900 "GET /?ide_webview_request_time=1754029452017 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:24:12,486 log 22348 20900 Not Found: /@vite/client
+WARNING 2025-08-01 03:24:12,524 basehttp 22348 20900 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:24:37,307 autoreload 22348 17388 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\settings.py changed, reloading.
+INFO 2025-08-01 03:24:37,777 autoreload 16788 21920 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\settings.py changed, reloading.
+INFO 2025-08-01 03:24:38,708 autoreload 23812 18308 Watching for file changes with StatReloader
+INFO 2025-08-01 03:24:39,112 autoreload 23816 23820 Watching for file changes with StatReloader
+INFO 2025-08-01 03:24:42,714 basehttp 23812 24376 "GET /?ide_webview_request_time=1754029482331 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:24:43,419 log 23812 24376 Not Found: /@vite/client
+WARNING 2025-08-01 03:24:43,423 basehttp 23812 24376 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:24:48,284 autoreload 23812 18308 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\settings.py changed, reloading.
+INFO 2025-08-01 03:24:48,377 autoreload 23816 23820 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\settings.py changed, reloading.
+INFO 2025-08-01 03:24:49,497 autoreload 24416 24444 Watching for file changes with StatReloader
+INFO 2025-08-01 03:24:49,631 autoreload 24312 15044 Watching for file changes with StatReloader
+INFO 2025-08-01 03:24:54,141 basehttp 24416 23888 "GET /?ide_webview_request_time=1754029493754 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:24:54,250 log 24416 23888 Not Found: /@vite/client
+WARNING 2025-08-01 03:24:54,252 basehttp 24416 23888 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:25:05,620 autoreload 24416 24444 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\urls.py changed, reloading.
+INFO 2025-08-01 03:25:06,518 autoreload 24312 15044 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\urls.py changed, reloading.
+INFO 2025-08-01 03:25:06,979 autoreload 23620 24320 Watching for file changes with StatReloader
+INFO 2025-08-01 03:25:07,546 autoreload 23704 23580 Watching for file changes with StatReloader
+INFO 2025-08-01 03:25:29,975 autoreload 23620 24320 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\urls.py changed, reloading.
+INFO 2025-08-01 03:25:30,496 autoreload 23704 23580 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\urls.py changed, reloading.
+INFO 2025-08-01 03:25:31,228 autoreload 24340 24448 Watching for file changes with StatReloader
+INFO 2025-08-01 03:25:31,856 autoreload 24328 24468 Watching for file changes with StatReloader
+INFO 2025-08-01 03:25:35,405 basehttp 24340 9152 "GET /?ide_webview_request_time=1754029535032 HTTP/1.1" 200 64858
+WARNING 2025-08-01 03:25:35,512 log 24340 9152 Not Found: /@vite/client
+WARNING 2025-08-01 03:25:35,521 basehttp 24340 9152 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:27:25,224 autoreload 24328 24468 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\eventos\models.py changed, reloading.
+INFO 2025-08-01 03:27:25,578 autoreload 24340 24448 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\eventos\models.py changed, reloading.
+INFO 2025-08-01 03:27:27,626 autoreload 15988 15456 Watching for file changes with StatReloader
+INFO 2025-08-01 03:27:27,708 autoreload 9936 7528 Watching for file changes with StatReloader
+INFO 2025-08-01 03:27:31,623 basehttp 15988 5104 "GET /?ide_webview_request_time=1754029651233 HTTP/1.1" 200 64981
+WARNING 2025-08-01 03:27:31,732 log 15988 5104 Not Found: /@vite/client
+WARNING 2025-08-01 03:27:31,765 basehttp 15988 5104 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 03:27:45,740 autoreload 15988 15456 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\eventos\models.py changed, reloading.
+INFO 2025-08-01 03:27:45,762 autoreload 9936 7528 C:\Users\Usuário\Downloads\BookingClone\InfinityPark\WebMola\InfinityPark\DjangoHelloWorld\eventos\models.py changed, reloading.
+INFO 2025-08-01 03:27:49,587 autoreload 23924 18456 Watching for file changes with StatReloader
+INFO 2025-08-01 03:27:49,599 autoreload 22204 21384 Watching for file changes with StatReloader
+INFO 2025-08-01 03:27:53,227 basehttp 23924 19448 "GET /?ide_webview_request_time=1754029672852 HTTP/1.1" 200 64981
+WARNING 2025-08-01 03:27:53,342 log 23924 19448 Not Found: /@vite/client
+WARNING 2025-08-01 03:27:53,351 basehttp 23924 19448 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 04:13:34,492 basehttp 23924 19616 "GET /13/ HTTP/1.1" 200 49967
+WARNING 2025-08-01 04:13:35,285 log 23924 19616 Not Found: /@vite/client
+WARNING 2025-08-01 04:13:35,286 basehttp 23924 19616 "GET /@vite/client HTTP/1.1" 404 6686
+INFO 2025-08-01 15:55:17,012 autoreload 23860 13852 Watching for file changes with StatReloader
+INFO 2025-08-01 15:56:11,812 autoreload 23924 20968 Watching for file changes with StatReloader

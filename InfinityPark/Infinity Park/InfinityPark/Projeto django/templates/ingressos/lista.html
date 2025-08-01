@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }} - Infinity Park{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold mb-3">
+                <i class="fas fa-ticket-alt text-primary"></i>
+                {{ titulo }}
+            </h1>
+            <p class="lead text-muted">{{ descricao }}</p>
+        </div>
+    </div>
+    
+    <!-- Promoções Ativas -->
+    {% if promocoes_ativas %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card bg-light shadow">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-3">
+                        <i class="fas fa-percentage text-danger"></i> Promoções Ativas
+                    </h5>
+                    <div class="row">
+                        {% for promocao in promocoes_ativas %}
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 border-danger">
+                                <div class="card-header bg-danger text-white">
+                                    <h5 class="mb-0">{{ promocao.nome }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>{{ promocao.descricao }}</p>
+                                    <p class="mb-0"><strong>Desconto:</strong> {{ promocao.desconto }}%</p>
+                                    <p class="mb-0"><small>Válido até: {{ promocao.data_fim|date:"d/m/Y" }}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Lista de Ingressos -->
+    <div class="row">
+        {% for tipo in tipos_ingresso %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">{{ tipo.nome }}</h5>
+                </div>
+                <div class="card-body">
+                    <p>{{ tipo.descricao }}</p>
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Duração</span>
+                            <span class="badge bg-primary rounded-pill">{{ tipo.duracao_dias }} dias</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Acesso</span>
+                            <span class="badge bg-info rounded-pill">{{ tipo.get_tipo_acesso_display }}</span>
+                        </li>
+                        {% if tipo.restricao_idade %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span>Idade Mínima</span>
+                            <span class="badge bg-warning rounded-pill">{{ tipo.restricao_idade }} anos</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="text-primary mb-0">R$ {{ tipo.preco }}</h4>
+                        <a href="{% url 'ingressos:detalhe' tipo.id %}" class="btn btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Comprar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="alert alert-info">
+                <h4 class="alert-heading">Nenhum ingresso disponível no momento</h4>
+                <p>Por favor, tente novamente mais tarde ou entre em contato com o suporte.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Informações Adicionais -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-info-circle"></i> Informações Importantes</h5>
+                    <ul class="mb-0">
+                        <li>Todos os ingressos são nominais e intransferíveis</li>
+                        <li>É necessário apresentar documento com foto na entrada do parque</li>
+                        <li>Crianças menores de 5 anos não pagam ingresso (acompanhadas de um adulto pagante)</li>
+                        <li>Em caso de dúvidas, entre em contato com nossa central de atendimento</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
